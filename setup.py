@@ -12,12 +12,12 @@ tests_require = [
 ]
 
 setup(
-    name='quandl',
+    name='yitian',
     version='0.0.1',
     description='World Financial and Economic Data Analysis',
     author='Ziran Feng',
     author_email='ziran.feng01@gmail.com',
-    package_dir={'quandl': 'quandl'},
+    package_dir={'yitian': 'yitian'},
     package_data={'': ['resources/*']},
     packages=find_packages(exclude=['tests', '*.tests', '*.tests.*']),
     classifiers=[
