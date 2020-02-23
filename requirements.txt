@@ -1,0 +1,2 @@
+-r requirements/quandl.txt
+-r requirements/test.txt
