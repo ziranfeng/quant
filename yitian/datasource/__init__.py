@@ -1,0 +1,1 @@
+DATA_WAREHOUSE_LOC = 'gs://zhongyuan-dw'
