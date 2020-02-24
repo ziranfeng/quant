@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="061e8099-0970-4414-a918-8b071017eaae" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/notebooks/ETL/opec/export.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/yitian/datasource/quandl/opec/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yitian/datasource/quandl/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/quandl/__init__.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,7 +29,7 @@
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -54,9 +50,9 @@
     </state>
     <state x="430" y="271" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1440.877/-1005.-1417.3440.1417@0.23.1440.877" timestamp="1582498463787" />
     <state x="430" y="271" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1440.877@0.23.1440.877" timestamp="1582487661655" />
-    <state x="220" y="100" key="SettingsEditor" timestamp="1582492314230">
+    <state x="220" y="100" key="SettingsEditor" timestamp="1582525062514">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state x="220" y="100" key="SettingsEditor/0.23.1440.877/-1005.-1417.3440.1417@0.23.1440.877" timestamp="1582492314230" />
+    <state x="220" y="100" key="SettingsEditor/0.23.1440.877/-1005.-1417.3440.1417@0.23.1440.877" timestamp="1582525062514" />
   </component>
 </project>
