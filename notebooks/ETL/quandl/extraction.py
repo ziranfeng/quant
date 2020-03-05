@@ -9,7 +9,7 @@ from yitian.datasource.quandl import api, opec, nasdaq
 # | parameter  | example  |  description                        |
 # |------------|----------|-------------------------------------|
 # | year       | 2020     | the target year for data extraction |
-year = 2020
+year = locals()['year']
 
 # ----------------------------------------------------------------------------------------------------------------------
 
