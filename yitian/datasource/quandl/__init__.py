@@ -7,5 +7,3 @@ QUANDL_API_HTTPS = 'https://www.quandl.com/api'
 # Data Categories
 EQUITY = 'equity'
 COMMODITY = 'commodity'
-
-

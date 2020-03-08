@@ -1,4 +1,8 @@
+import subprocess
+from typing import List
+
 from yitian.datasource import DATA_WAREHOUSE_LOC
+
 
 def create_dw_path(*relative_path, data_warehouse=DATA_WAREHOUSE_LOC) -> str:
     """
@@ -11,3 +15,29 @@ def create_dw_path(*relative_path, data_warehouse=DATA_WAREHOUSE_LOC) -> str:
     """
 
     return '/'.join([data_warehouse] + list(relative_path))
+
+
+def list_bucket_files(bucket_parent_dir: str, file_ext='.csv') -> List:
+    """
+    Genrate a list of file dir with specified extention under parent bucket directory
+
+    :param bucket_parent_dir: a parent dir in cloud bucket containing the target files
+    :param file_ext: target file extensions
+
+    :return: a list of target file dir in cloud bucket
+    """
+
+    cmd = ['gsutil', 'ls', '-r', bucket_parent_dir]
+    output = subprocess.check_output(cmd, universal_newlines=True).splitlines()
+
+    # TODO: Due to the unknown issue with gcp storage, gsutil ls commands will return duplicated dir with '//' and '/'
+    if bucket_parent_dir.endswith('/'):
+        replace_from, replace_to = bucket_parent_dir+'/', bucket_parent_dir
+    else:
+        replace_from, replace_to = bucket_parent_dir + '//', bucket_parent_dir + '/'
+
+    dedup_sub_dir_list = list(set([dir.replace(replace_from, replace_to) for dir in output]))
+
+    file_dirs = [file_dir for file_dir in dedup_sub_dir_list if file_dir.endswith(file_ext)]
+
+    return file_dirs
