@@ -72,3 +72,6 @@ output_file_name = "{start}_{end}_{frequency}.csv".format(start=start_date, end=
 output_dir = file_utils.create_dw_path(output_dw_dir, str(year), output_file_name)
 
 extraction_pd.to_csv(output_dir, header=True, mode='w', encoding='utf-8')
+
+print("{output_file_name} has been overwrite to {output_dir}"
+      .format(output_file_name=output_file_name, output_dir=output_dir))
