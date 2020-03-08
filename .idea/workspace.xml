@@ -2,14 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="061e8099-0970-4414-a918-8b071017eaae" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/yitian/datasource/load.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/yitian/datasource/quandl/fed/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/yitian/plots/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/yitian/plots/plot_utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/yitian/plots/plotly/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/yitian/plots/plotly/plot.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/yitian/plots/plotly/plotly_utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/ETL/quandl/extraction.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/quandl/update.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/ETL/quandl/extraction.py" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/quandl/extraction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/ETL/quandl/nasdaq.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/quandl/nasdaq.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/ETL/quandl/opec.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/quandl/opec.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yitian/datasource/file_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/file_utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
