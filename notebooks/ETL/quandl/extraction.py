@@ -1,51 +1,73 @@
+from datetime import datetime as dt
 import requests
 import pandas as pd
 
-from yitian.datasource.quandl import *
-from yitian.datasource.quandl import api, opec, nasdaq
+from yitian.datasource import file_utils
+from yitian.datasource.quandl import api
 
 
 # required parameters
-# | parameter  | example  |  description                        |
-# |------------|----------|-------------------------------------|
-# | year       | 2020     | the target year for data extraction |
+# | parameter  | example     |  description                        |
+# |------------|-------------|-------------------------------------|
+# | year       | 2020        | the target year for data extraction |
+# | db_name    | 'NASDAQOMX' | the target year for data extraction |
+# | ds_name    | 'XQC'       | the target year for data extraction |
 year = locals()['year']
+db_name = locals()['db_name']
+ds_name = locals()['ds_name']
+output_dw_dir = locals['output_dw_dir']
 
 # ----------------------------------------------------------------------------------------------------------------------
-
 # Set the start and end dates of the selected year
 
 start_date = f'{year}-01-01'
 end_date = f'{year}-12-31'
 
+print("The start date is set to {start_date} & The end date is set to {end_date}".format(start_date=start_date,
+                                                                                         end_date=end_date))
 
-# Extract OPEC Reference Basket Price data
+# Extract Datasets Metadata
 
-call = api.construct_ts_call(db_name=opec.OPEC_DATABASE_CODE, ds_name=opec.OPEC_DATASET_CODE,
-                             start_date=start_date, end_date=end_date)
+metadata_call = api.construct_metadata_call(db_name=db_name, ds_name=ds_name)
+metadata = requests.get(metadata_call).json()
 
-extraction = requests.get(call).json()
+locals().update(metadata['dataset'])
 
-opec_pd = pd.DataFrame(data=extraction['dataset']['data'], columns=extraction['dataset']['column_names'])
-
-_, output_dir = api.extraction_output_name_and_dir(extraction=extraction, category=COMMODITY,
-                                                              name=opec.NAME, subcategory='crude_oil_price', year=year)
-
-opec_pd.to_csv(output_dir, header=True, mode='w', encoding='utf-8')
+print(*metadata['dataset'].items(), sep='\n')
 
 
-# Extract OPEC Reference Basket Price data
+# Check start and end dates within range
 
-for subcategory, dataset_name in nasdaq.DATASET_CODE_MAP.items():
+if dt.strptime(start_date, "%Y-%m-%d") < dt.strptime(oldest_available_date, "%Y-%m-%d"):
+    if dt.strptime(start_date, "%Y-%m-%d").year == dt.strptime(oldest_available_date, "%Y-%m-%d").year:
+        start_date = oldest_available_date
+    else:
+        raise ValueError("User defined start date {start_date} needs to be larger than "
+                         "the oldest available date {oldest_available_date}"
+                         .format(start_date=start_date, oldest_available_date=oldest_available_date))
 
-    call = api.construct_ts_call(db_name=nasdaq.NASDAQ_DATABASE_CODE, ds_name=dataset_name,
-                                 start_date=start_date, end_date=end_date)
+if dt.strptime(end_date, "%Y-%m-%d") > dt.strptime(newest_available_date, "%Y-%m-%d"):
+    if dt.strptime(end_date, "%Y-%m-%d").year == dt.strptime(newest_available_date, "%Y-%m-%d").year:
+        end_date = newest_available_date
+    else:
+        raise ValueError("User defined end date {end_date} needs to be smaller than "
+                         "the newest available date {newest_available_date}"
+                         .format(end_date=end_date, newest_available_date=newest_available_date))
 
-    extraction = requests.get(call).json()
 
-    nasdaq_pd = pd.DataFrame(data=extraction['dataset']['data'], columns=extraction['dataset']['column_names'])
+# Extract Datasets Data and construct pandas
 
-    _, output_dir = api.extraction_output_name_and_dir(extraction=extraction, category=EQUITY,
-                                                                  name=nasdaq.NAME, subcategory=subcategory, year=year)
+data_call = api.construct_ts_call(db_name=db_name, ds_name=ds_name, start_date=start_date, end_date=end_date)
+extraction = requests.get(data_call).json()
 
-    nasdaq_pd.to_csv(output_dir, header=True, mode='w', encoding='utf-8')
+extraction_pd = pd.DataFrame(data=extraction['dataset_data']['data'], columns=column_names)
+
+
+# Write data to data warehouse
+
+output_file_name = "{start}_{end}_{frequency}.csv".format(start=start_date, end=end_date,
+                                                          frequency=frequency)
+
+output_dir = file_utils.create_dw_path(output_dw_dir, str(year), output_file_name)
+
+extraction_pd.to_csv(output_dir, header=True, mode='w', encoding='utf-8')
