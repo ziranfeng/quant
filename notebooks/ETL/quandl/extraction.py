@@ -7,15 +7,16 @@ from yitian.datasource.quandl import api
 
 
 # required parameters
-# | parameter  | example     |  description                        |
-# |------------|-------------|-------------------------------------|
-# | year       | 2020        | the target year for data extraction |
-# | db_name    | 'NASDAQOMX' | the target year for data extraction |
-# | ds_name    | 'XQC'       | the target year for data extraction |
+# | parameter     | example          |  description                             |
+# |---------------|------------------|------------------------------------------|
+# | year          | 2020             | the target year for data extraction      |
+# | db_name       | 'NASDAQOMX'      | the data base code from quandl           |
+# | ds_name       | 'XQC'            | the data set code from quandl            |
+# | output_dw_dir | 'commodity/opec' | the sub-dir in data warehouse for output |
 year = locals()['year']
 db_name = locals()['db_name']
 ds_name = locals()['ds_name']
-output_dw_dir = locals['output_dw_dir']
+output_dw_dir = locals()['output_dw_dir']
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Set the start and end dates of the selected year
