@@ -15,10 +15,13 @@ def get_html(plot_file: str, width=1500, height=900) -> HTML:
 
     :return:
     """
-    iframe = '<iframe src="{src}" width="{width}" height="{height}"/>'.format(src=re.sub(r'^/cdn', '', plot_file),
+    # TODO: On GCP Jupyter NoteBook the iframe cannot be rendered if it stored in porject file system
+    #       And the Jupyter doesn't have the permission to access the root system
+    #       Therefore, the work around is to load the local HTML directly from Jupyter local system
+    iframe = '<iframe src="{src}" width="{width}" height="{height}"/>'.format(src=plot_file,
                                                                               width=width,
                                                                               height=height)
-    return HTML(iframe)
+    return HTML(plot_file)
 
 
 def add_subtitle(title, sub_title):

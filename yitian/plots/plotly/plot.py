@@ -14,7 +14,7 @@ from yitian.plots.plotly import plotly_utils
 
 def time_series(data_pd, cols: List[str], left_y_title: str, title: str, x_title='Date Time', target_id = None,
                 right_cols: List[str] = None, right_y_title=None, min_time=None, max_time=None, name: str = None,
-                width=1500, height=700, plot_file='/cdn/plots/plotly/time_{name}.html') -> display.HTML:
+                width=1500, height=700, plot_file='/home/jupyter/plots/time_{name}.html') -> display.HTML:
 
     if right_cols is None:
         right_cols = []

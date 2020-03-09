@@ -27,7 +27,7 @@ def save_plot(fig, plot_file, **kwargs):
     pio.write_html(fig, plot_file, **kwargs)
 
 
-def show(fig, plot_file='/cdn/plots/{name}.html', name=None, append_timestamp=True, width=1500, height=900) -> HTML:
+def show(fig, plot_file='/home/jupyter/plots/{name}.html', name=None, append_timestamp=True, width=1500, height=900) -> HTML:
     """
     Display Plotly figure in the current workbench session
 
