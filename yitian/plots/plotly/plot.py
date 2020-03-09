@@ -30,7 +30,7 @@ def time_series(data_pd, cols: List[str], left_y_title: str, title: str, name: s
 
     plot_pd = plot_pd.sort_index(level=DATE)
 
-    fig = go.Figure() if len(right_cols) == 0 else make_subplots(specs=[{'secondary_y': True}])
+    fig = go.Figure() if len(right_cols) == 0 else make_subplots(specs=[[{'secondary_y': True}]])
 
     for left_col in cols:
         fig.add_trace(go.Scatter(
