@@ -7,14 +7,15 @@ import pandas as pd
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
-from yitian.datasource.quandl import DATE
+from yitian.datasource import DATE
 from yitian.plots import plot_utils
 from yitian.plots.plotly import plotly_utils
 
 
-def time_series(data_pd, cols: List[str], left_y_title: str, title: str, x_title='Date Time', target_id = None,
-                right_cols: List[str] = None, right_y_title=None, min_time=None, max_time=None, name: str = None,
-                width=1500, height=700, plot_file='/home/jupyter/plots/time_{name}.html') -> display.HTML:
+def time_series(data_pd, cols: List[str], left_y_title: str, title: str, name: str,
+                x_title='Date Time', target_id = None, right_cols: List[str] = None, right_y_title=None,
+                min_time=None, max_time=None, width=1500, height=700,
+                plot_file='/home/jupyter/plots/time_series_{name}.html', append_timestamp=False) -> display.HTML:
 
     if right_cols is None:
         right_cols = []
@@ -58,4 +59,4 @@ def time_series(data_pd, cols: List[str], left_y_title: str, title: str, x_title
     else:
         fig.update_yaxes(title_text=left_y_title)
 
-    return plotly_utils.show(fig, plot_file, name, width=width, height=height)
+    return plotly_utils.show(fig, plot_file, name, width=width, height=height, append_timestamp=append_timestamp)
