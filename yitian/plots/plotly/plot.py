@@ -13,14 +13,14 @@ from yitian.plots.plotly import plotly_utils
 
 
 def time_series(data_pd, cols: List[str], left_y_title: str, title: str, name: str,
-                x_title='Date Time', target_id = None, right_cols: List[str] = None, right_y_title=None,
-                min_time=None, max_time=None, width=1500, height=700,
-                plot_file='/home/jupyter/plots/time_series_{name}.html', append_timestamp=False) -> display.HTML:
+                x_title='Date Time', right_cols: List[str]=None, right_y_title=None,
+                min_time=None, max_time=None, width=1500, height=700, append_timestamp=False,
+                plot_file='/home/jupyter/plots/time_series_{name}.html') -> display.HTML:
 
     if right_cols is None:
         right_cols = []
 
-    plot_pd = data_pd.loc[target_id] if target_id is not None else data_pd
+    plot_pd = data_pd
 
     if min_time is not None:
         plot_pd = plot_pd[plot_pd.index.get_level_values(DATE) >= min_time]
@@ -37,7 +37,8 @@ def time_series(data_pd, cols: List[str], left_y_title: str, title: str, name: s
             x=plot_pd.index.get_level_values(DATE),
             y=plot_pd[left_col],
             mode='lines',
-            name=left_col
+            name=left_col,
+            connectgaps = False
         ))
 
     for right_col in right_cols:
@@ -45,7 +46,8 @@ def time_series(data_pd, cols: List[str], left_y_title: str, title: str, name: s
             x=plot_pd.index.get_level_values(DATE),
             y=plot_pd[right_col],
             mode='lines',
-            name=left_col
+            name=right_cols,
+            connectgaps=False
         ), secondary_y=True)
 
     fig.update_layout(
