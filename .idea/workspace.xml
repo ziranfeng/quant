@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="061e8099-0970-4414-a918-8b071017eaae" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/yitian/datasource/tests/test_preprocess.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yitian/datasource/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yitian/datasource/preprocess.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/preprocess.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yitian/datasource/quandl/fed/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/quandl/fed/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yitian/datasource/quandl/nasdaq/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/quandl/nasdaq/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yitian/datasource/quandl/opec/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/quandl/opec/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yitian/plots/plotly/plot.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/plots/plotly/plot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements/quandl.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements/quandl.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
