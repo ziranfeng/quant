@@ -21,4 +21,3 @@ NASDAQ_PD_RENAME_MAP = {
     'Total Market Value': 'nasdaq_total_market_value',
     'Dividend Market Value': 'nasdaq_dividend_market_value',
 }
-
