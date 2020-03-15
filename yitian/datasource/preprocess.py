@@ -42,4 +42,4 @@ def filter_dates(ts_pd: pd.DataFrame, start_date: str=None, end_date: str=None) 
     if end_date:
         ts_pd = ts_pd.loc[ts_pd.index <= end_date]
 
-    return pd.concat([date_range_pd, ts_pd], axis=1, sort=False)
+    return date_range_pd.merge(ts_pd, how='left', on=DATE)
