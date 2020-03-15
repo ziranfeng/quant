@@ -36,19 +36,21 @@ output_pd = preprocess.add_ymd(data)
 
 for year, grouped_pd in output_pd.groupby(YEAR):
 
-    bucket_path = file_utils.create_data_path(data_category, 'company', comp_code, str(year), 'history.csv')
+    bucket_path = file_utils.create_data_path(data_category, 'company', comp_code.lower(), str(year), 'history.csv')
     grouped_pd.to_csv(bucket_path, header=True, index=True, mode='w', encoding='utf-8')
 
-    print("{company} in year {year} has been overwrite to {output_dir}"
+    print("{company} in year {year} has been write to {output_dir}"
           .format(company=comp_code, year=year, output_dir=bucket_path))
 
 
 # Write historical price to data warehouse by company
 
 output_file_name = '{timestamp}.pkl'.format(timestamp=dt.now().strftime("%Y-%m-%d"))
-local_path = file_utils.create_data_path(data_category, 'company', comp_code, 'pickle', output_file_name, base_path=LOCAL_CACHE)
+local_path = file_utils.create_local_path(data_category, 'company', comp_code.lower(), 'pickle', output_file_name)
 
 with open(local_path, 'wb') as output:
     pickle.dump(stock, output, pickle.HIGHEST_PROTOCOL)
 
 file_utils.local_to_bucket(local_path)
+
+print("{output_file_name} has been write to bucket".format(output_file_name=output_file_name))

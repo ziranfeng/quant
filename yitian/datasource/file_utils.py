@@ -22,6 +22,16 @@ def create_data_path(*relative_path, base_path=DATA_PATH) -> str:
     return '/'.join([base_path] + list(relative_path))
 
 
+def create_local_path(*relative_path, base_path=LOCAL_CACHE):
+
+    local_path = '/'.join([base_path] + list(relative_path))
+
+    if not os.path.isdir(os.path.dirname(local_path)):
+        os.makedirs(os.path.dirname(local_path), exist_ok=True)
+
+    return local_path
+
+
 def bucket_to_local(path, cache=LOCAL_CACHE):
 
     is_relative = not path.startswith('/')
@@ -33,8 +43,7 @@ def bucket_to_local(path, cache=LOCAL_CACHE):
     if os.path.exists(local_path):
         return local_path
 
-    if not os.path.isdir(os.path.dirname(local_path)):
-        os.makedirs(os.path.dirname(local_path), exist_ok=True)
+    local_path = create_local_path(local_path)
 
     bucket_absolute_path = create_data_path(path) if is_relative else path
 
@@ -49,11 +58,10 @@ def bucket_to_local(path, cache=LOCAL_CACHE):
 
 def local_to_bucket(path, cache=LOCAL_CACHE):
 
-    if os.path.isabs(path):
-        raise ValueError("path ({path}) must be relative to cache ({cache})".format(path=path, cache=cache))
+    is_absolute = os.path.isabs(path)
 
-    cache_file = os.path.join(cache, path)
-    bucket_path = create_data_path(path)
+    cache_file = path if is_absolute else os.path.join(cache, path)
+    bucket_path = create_data_path(path.split(cache)[1][1:])
 
     cmd = ['gsutil', 'mv', cache_file, bucket_path]
     try:

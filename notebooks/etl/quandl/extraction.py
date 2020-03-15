@@ -13,7 +13,7 @@ from yitian.datasource.quandl import api
 # | year          | 2020             | the target year for data extraction      |
 # | db_name       | 'NASDAQOMX'      | the data base code from quandl           |
 # | ds_name       | 'XQC'            | the data set code from quandl            |
-data_category = locals()['data_type']
+data_category = locals()['data_category']
 year = locals()['year']
 db_name = locals()['db_name']
 ds_name = locals()['ds_name']
@@ -62,7 +62,7 @@ extraction_pd = pd.DataFrame(data=extraction['dataset_data']['data'], columns=co
 
 # Define output dir names and Write data to data warehouse
 
-output_dir = file_utils.create_data_path(data_category, db_name, ds_name, str(year), 'history.csv')
+output_dir = file_utils.create_data_path(data_category, db_name.lower(), ds_name.lower(), str(year), 'history.csv')
 
 extraction_pd.to_csv(output_dir, header=True, index=False, mode='w', encoding='utf-8')
 
