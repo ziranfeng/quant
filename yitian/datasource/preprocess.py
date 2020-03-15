@@ -2,7 +2,7 @@ from typing import List, Dict
 import pandas as pd
 
 
-from yitian.datasource import DATE
+from yitian.datasource import *
 
 
 def create_ts_pd(data_pd: pd.DataFrame, date_col: str=None, format=None, sort=True):
@@ -24,9 +24,24 @@ def create_ts_pd(data_pd: pd.DataFrame, date_col: str=None, format=None, sort=Tr
         data_pd.sort_index(inplace=True)
 
 
+def add_ymd(ts_pd: pd.DataFrame, sort=True):
+
+    data_pd = ts_pd.reset_index()
+
+    data_pd[YEAR] = pd.DatetimeIndex(data_pd[DATE]).year
+    data_pd[MONTH] = pd.DatetimeIndex(data_pd[DATE]).month
+    data_pd[DAY] = pd.DatetimeIndex(data_pd[DATE]).day
+
+    data_pd.set_index([DATE], inplace=True)
+
+    if sort:
+        data_pd.sort_index(inplace=True)
+
+    return data_pd
+
+
 def filter_dates(ts_pd: pd.DataFrame, start_date: str=None, end_date: str=None) -> pd.DataFrame:
     """
-
 
     :param ts_pd:
     :param start_date:

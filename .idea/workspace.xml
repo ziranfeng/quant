@@ -2,15 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="061e8099-0970-4414-a918-8b071017eaae" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/yitian/datasource/datareader/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notebooks/etl/yfinance/extraction.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/yitian/datasource/yfinance/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/notebooks/etl/quandl/extraction.py" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/quandl/extraction.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements/quandl.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements/quandl.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yitian/datasource/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yitian/datasource/file_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/file_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yitian/datasource/preprocess.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/preprocess.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yitian/datasource/quandl/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/quandl/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yitian/datasource/quandl/fed/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/quandl/fed/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yitian/datasource/quandl/nasdaq/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/quandl/nasdaq/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yitian/datasource/quandl/opec/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/quandl/opec/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yitian/datasource/tests/test_preprocess.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/tests/test_preprocess.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yitian/plots/plotly/plot.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/plots/plotly/plot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yitian/datasource/tests/test_file_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/tests/test_file_utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,18 +50,53 @@
       <recent name="$PROJECT_DIR$/notebooks/ETL/quandl" />
     </key>
   </component>
-  <component name="RunManager" selected="Python tests.Unittests for test_preprocess.Test">
-    <configuration name="Unittests for test_plot.Test.test_pie_chart" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python tests.Unittests for test_file_utils.Test.test_list_bucket_year_dir">
+    <configuration name="extraction" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="quandl" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/notebooks/etl/yfinance" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/notebooks/etl/yfinance/extraction.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests for test_file_utils.Test.test_create_dw_path" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="quandl" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/yitian/plots/plotly/tests" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/yitian/datasource/tests" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_plot.Test.test_pie_chart&quot;" />
+      <option name="_new_target" value="&quot;test_file_utils.Test.test_create_dw_path&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests for test_file_utils.Test.test_list_bucket_year_dir" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="quandl" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/yitian/datasource/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_file_utils.Test.test_list_bucket_year_dir&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
@@ -75,20 +114,6 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests for test_plot.Test.test_time_series" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
-      <module name="quandl" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/yitian/plots/plotly/tests" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_plot.Test.test_time_series&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
     <configuration name="Unittests for test_preprocess.Test" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="quandl" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -103,27 +128,13 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests for test_preprocess.Test.test_filter_dates" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
-      <module name="quandl" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/yitian/datasource/tests" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_preprocess.Test.test_filter_dates&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.Unittests for test_file_utils.Test.test_list_bucket_year_dir" />
+        <item itemvalue="Python tests.Unittests for test_file_utils.Test.test_create_dw_path" />
+        <item itemvalue="Python.extraction" />
         <item itemvalue="Python tests.Unittests for test_preprocess.Test" />
         <item itemvalue="Python tests.Unittests for test_plot.Test.test_plot_histogram" />
-        <item itemvalue="Python tests.Unittests for test_plot.Test.test_time_series" />
-        <item itemvalue="Python tests.Unittests for test_plot.Test.test_pie_chart" />
-        <item itemvalue="Python tests.Unittests for test_preprocess.Test.test_filter_dates" />
       </list>
     </recent_temporary>
   </component>
@@ -162,28 +173,28 @@
       <screen x="-1005" y="-1417" width="3440" height="1417" />
     </state>
     <state x="-591" y="-1135" key="CommitChangelistDialog2/0.23.1440.877/-1005.-1417.3440.1417@-1005.-1417.3440.1417" timestamp="1584167588201" />
-    <state width="1404" height="387" key="GridCell.Tab.0.bottom" timestamp="1584235814251">
+    <state width="1404" height="387" key="GridCell.Tab.0.bottom" timestamp="1584295894847">
       <screen x="-1005" y="-1417" width="3440" height="1417" />
     </state>
-    <state width="1404" height="387" key="GridCell.Tab.0.bottom/0.23.1440.877/-1005.-1417.3440.1417@-1005.-1417.3440.1417" timestamp="1584235814251" />
+    <state width="1404" height="387" key="GridCell.Tab.0.bottom/0.23.1440.877/-1005.-1417.3440.1417@-1005.-1417.3440.1417" timestamp="1584295894847" />
     <state width="1419" height="230" key="GridCell.Tab.0.bottom/0.23.1440.877/-1005.-1417.3440.1417@0.23.1440.877" timestamp="1583383538252" />
     <state width="1419" height="285" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1583299683451" />
-    <state width="1404" height="387" key="GridCell.Tab.0.center" timestamp="1584235814250">
+    <state width="1404" height="387" key="GridCell.Tab.0.center" timestamp="1584295894846">
       <screen x="-1005" y="-1417" width="3440" height="1417" />
     </state>
-    <state width="1404" height="387" key="GridCell.Tab.0.center/0.23.1440.877/-1005.-1417.3440.1417@-1005.-1417.3440.1417" timestamp="1584235814250" />
+    <state width="1404" height="387" key="GridCell.Tab.0.center/0.23.1440.877/-1005.-1417.3440.1417@-1005.-1417.3440.1417" timestamp="1584295894846" />
     <state width="1419" height="230" key="GridCell.Tab.0.center/0.23.1440.877/-1005.-1417.3440.1417@0.23.1440.877" timestamp="1583383538249" />
     <state width="1419" height="285" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1583299683449" />
-    <state width="1404" height="387" key="GridCell.Tab.0.left" timestamp="1584235814250">
+    <state width="1404" height="387" key="GridCell.Tab.0.left" timestamp="1584295894845">
       <screen x="-1005" y="-1417" width="3440" height="1417" />
     </state>
-    <state width="1404" height="387" key="GridCell.Tab.0.left/0.23.1440.877/-1005.-1417.3440.1417@-1005.-1417.3440.1417" timestamp="1584235814250" />
+    <state width="1404" height="387" key="GridCell.Tab.0.left/0.23.1440.877/-1005.-1417.3440.1417@-1005.-1417.3440.1417" timestamp="1584295894845" />
     <state width="1419" height="230" key="GridCell.Tab.0.left/0.23.1440.877/-1005.-1417.3440.1417@0.23.1440.877" timestamp="1583383538245" />
     <state width="1419" height="285" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1583299683448" />
-    <state width="1404" height="387" key="GridCell.Tab.0.right" timestamp="1584235814251">
+    <state width="1404" height="387" key="GridCell.Tab.0.right" timestamp="1584295894846">
       <screen x="-1005" y="-1417" width="3440" height="1417" />
     </state>
-    <state width="1404" height="387" key="GridCell.Tab.0.right/0.23.1440.877/-1005.-1417.3440.1417@-1005.-1417.3440.1417" timestamp="1584235814251" />
+    <state width="1404" height="387" key="GridCell.Tab.0.right/0.23.1440.877/-1005.-1417.3440.1417@-1005.-1417.3440.1417" timestamp="1584295894846" />
     <state width="1419" height="230" key="GridCell.Tab.0.right/0.23.1440.877/-1005.-1417.3440.1417@0.23.1440.877" timestamp="1583383538251" />
     <state width="1419" height="285" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1583299683450" />
     <state width="1509" height="476" key="GridCell.Tab.1.bottom" timestamp="1584159388119">
@@ -218,9 +229,9 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="283" y="204" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.23.1440.877/-1005.-1417.3440.1417@0.23.1440.877" timestamp="1583383375892" />
-    <state x="54" y="-1107" width="670" height="676" key="search.everywhere.popup" timestamp="1583724383620">
+    <state x="54" y="-1107" width="670" height="676" key="search.everywhere.popup" timestamp="1584238345687">
       <screen x="-1005" y="-1417" width="3440" height="1417" />
     </state>
-    <state x="54" y="-1107" width="670" height="676" key="search.everywhere.popup/0.23.1440.877/-1005.-1417.3440.1417@-1005.-1417.3440.1417" timestamp="1583724383620" />
+    <state x="54" y="-1107" width="670" height="676" key="search.everywhere.popup/0.23.1440.877/-1005.-1417.3440.1417@-1005.-1417.3440.1417" timestamp="1584238345687" />
   </component>
 </project>

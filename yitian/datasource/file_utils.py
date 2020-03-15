@@ -1,13 +1,15 @@
+import os
+
 import logging
 import subprocess
 from typing import List
 
-from yitian.datasource import DATA_WAREHOUSE_LOC
+from yitian.datasource import *
 
 log = logging.getLogger(__name__)
 
 
-def create_dw_path(*relative_path, data_warehouse=DATA_WAREHOUSE_LOC) -> str:
+def create_data_path(*relative_path, base_path=DATA_PATH) -> str:
     """
     Create path to project data in data warehouse on cloud from relative path components
 
@@ -17,10 +19,62 @@ def create_dw_path(*relative_path, data_warehouse=DATA_WAREHOUSE_LOC) -> str:
     :return: a full path in data warehouse on cloud
     """
 
-    return '/'.join([data_warehouse] + list(relative_path))
+    return '/'.join([base_path] + list(relative_path))
 
 
-def clean_dw_dir(*relative_path, data_warehouse=DATA_WAREHOUSE_LOC):
+def bucket_to_local(path, cache=LOCAL_CACHE):
+
+    is_relative = not path.startswith('/')
+
+    cache_path = path if is_relative else path[1:]
+
+    local_path = os.path.join(cache, cache_path)
+
+    if os.path.exists(local_path):
+        return local_path
+
+    if not os.path.isdir(os.path.dirname(local_path)):
+        os.makedirs(os.path.dirname(local_path), exist_ok=True)
+
+    bucket_absolute_path = create_data_path(path) if is_relative else path
+
+    cmd = ['gsutil', 'cp', bucket_absolute_path, local_path]
+    try:
+        subprocess.check_call(cmd, stderr=subprocess.STDOUT)
+    except subprocess.CalledProcessError as e:
+        print(e)
+
+    return local_path
+
+
+def local_to_bucket(path, cache=LOCAL_CACHE):
+
+    if os.path.isabs(path):
+        raise ValueError("path ({path}) must be relative to cache ({cache})".format(path=path, cache=cache))
+
+    cache_file = os.path.join(cache, path)
+    bucket_path = create_data_path(path)
+
+    cmd = ['gsutil', 'mv', cache_file, bucket_path]
+    try:
+        subprocess.check_call(cmd, stderr=subprocess.STDOUT)
+    except subprocess.CalledProcessError as e:
+        print(e)
+
+    return bucket_path
+
+
+def list_bucket_year_dir(bucket_parent_dir: str, years: List[int], ext: str=None):
+
+    file_dir_list = ['/'.join([bucket_parent_dir, str(year)]) for year in years]
+
+    if ext:
+        return ['/'.join([dir, '*' + ext]) for dir in file_dir_list]
+    else:
+        return ['/'.join([dir, '*']) for dir in file_dir_list]
+
+
+def clean_bucket_dir(*relative_path):
     """
     Create path to project data in data warehouse on cloud from relative path components
 
@@ -29,7 +83,7 @@ def clean_dw_dir(*relative_path, data_warehouse=DATA_WAREHOUSE_LOC):
 
     :return: a full path in data warehouse on cloud
     """
-    dir = '/'.join([data_warehouse] + list(relative_path))
+    dir = create_data_path(*relative_path)
 
     if dir.endswith('**'):
         log.warning("Removing whole sub-directory")
