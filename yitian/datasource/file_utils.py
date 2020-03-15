@@ -1,7 +1,10 @@
+import logging
 import subprocess
 from typing import List
 
 from yitian.datasource import DATA_WAREHOUSE_LOC
+
+log = logging.getLogger(__name__)
 
 
 def create_dw_path(*relative_path, data_warehouse=DATA_WAREHOUSE_LOC) -> str:
@@ -15,6 +18,30 @@ def create_dw_path(*relative_path, data_warehouse=DATA_WAREHOUSE_LOC) -> str:
     """
 
     return '/'.join([data_warehouse] + list(relative_path))
+
+
+def clean_dw_dir(*relative_path, data_warehouse=DATA_WAREHOUSE_LOC):
+    """
+    Create path to project data in data warehouse on cloud from relative path components
+
+    :param relative_path: path relative  to data warehouse path
+    :param data_warehouse: data warehouse location on cloud
+
+    :return: a full path in data warehouse on cloud
+    """
+    dir = '/'.join([data_warehouse] + list(relative_path))
+
+    if dir.endswith('**'):
+        log.warning("Removing whole sub-directory")
+
+    if dir.endswith('*'):
+        log.warning("Removing all objects in a sub-directory")
+
+    cmd = ['gsutil', 'rm', dir]
+    try:
+        subprocess.check_call(cmd, stderr=subprocess.STDOUT)
+    except subprocess.CalledProcessError as e:
+        print(e)
 
 
 def list_bucket_files(bucket_parent_dir: str, file_ext='.csv') -> List:

@@ -14,7 +14,7 @@ from yitian.plots.plotly import plotly_utils
 
 
 def time_series(ts_pd: pd.DataFrame, cols: List[str], left_y_title: str, title: str, name: str,
-                x_title='Date Time', right_cols: List[str]=None, right_y_title=None,
+                connectgaps=True, x_title='Date Time', right_cols: List[str]=None, right_y_title=None,
                 min_time=None, max_time=None, width=1500, height=700, append_timestamp=False,
                 plot_file='/home/jupyter/plots/time_series_{name}.html') -> display.HTML:
 
@@ -39,7 +39,7 @@ def time_series(ts_pd: pd.DataFrame, cols: List[str], left_y_title: str, title: 
             y=plot_pd[left_col],
             mode='lines',
             name=left_col,
-            connectgaps = False
+            connectgaps = connectgaps
         ))
 
     for right_col in right_cols:
@@ -48,7 +48,7 @@ def time_series(ts_pd: pd.DataFrame, cols: List[str], left_y_title: str, title: 
             y=plot_pd[right_col],
             mode='lines',
             name=right_col,
-            connectgaps=False
+            connectgaps=connectgaps
         ), secondary_y=True)
 
     fig.update_layout(

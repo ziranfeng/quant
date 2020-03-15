@@ -13,10 +13,12 @@ from yitian.datasource.quandl import api
 # | db_name       | 'NASDAQOMX'      | the data base code from quandl           |
 # | ds_name       | 'XQC'            | the data set code from quandl            |
 # | output_dw_dir | 'commodity/opec' | the sub-dir in data warehouse for output |
+# | rm_exist_obj  | True             | remove objects in output_dw_dir          |
 year = locals()['year']
 db_name = locals()['db_name']
 ds_name = locals()['ds_name']
 output_dw_dir = locals()['output_dw_dir']
+rm_exist_obj = locals()['rm_exist_obj']
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Set the start and end dates of the selected year
@@ -64,12 +66,20 @@ extraction = requests.get(data_call).json()
 extraction_pd = pd.DataFrame(data=extraction['dataset_data']['data'], columns=column_names)
 
 
-# Write data to data warehouse
+# Define output file and dir names
 
 output_file_name = "{start}_{end}_{frequency}.csv".format(start=start_date, end=end_date,
                                                           frequency=frequency)
-
 output_dir = file_utils.create_dw_path(output_dw_dir, str(year), output_file_name)
+
+
+# Clean the existing objects in the output dir if True
+
+if rm_exist_obj:
+    file_utils.clean_dw_dir(output_dw_dir, str(year), '*')
+
+
+# Write data to data warehouse
 
 extraction_pd.to_csv(output_dir, header=True, index=False, mode='w', encoding='utf-8')
 

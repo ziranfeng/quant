@@ -8,6 +8,7 @@ from yitian.datasource import preprocess
 
 
 class Test(unittest.TestCase):
+    
     def test_create_ts_pd(self):
         data_pd_one = pd.DataFrame([
             [pd.Timestamp('2019-01-01 00:00:00'), 11.11],
