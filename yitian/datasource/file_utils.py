@@ -102,7 +102,11 @@ def list_bucket_year_path(bucket_parent_dir: str, years: List[int], ext: str=Non
 
     file_dir_list = []
     for year_dir in year_dir_list:
-        file_dir_list = file_dir_list + list_bucket_path(year_dir, ext=ext)
+        try:
+            file_dir_list = file_dir_list + list_bucket_path(year_dir, ext=ext)
+        except:
+            log.warning("{year_dir} can not be reached; skipped to process others")
+            continue
 
     return file_dir_list
 

@@ -37,3 +37,6 @@ for parent_bucket_dir in parent_bucket_list:
     name = '_'.join(parent_bucket_dir.split('/')[4:])
 
     loaded_pds[name] = result_pd
+
+    print("{name} has been added to the data dict".format(name=name))
+    print("========================================================")
