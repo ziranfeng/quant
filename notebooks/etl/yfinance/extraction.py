@@ -28,7 +28,7 @@ stock = yf.Ticker(comp_code)
 # Extract historical price
 
 data = stock.history(period="max").reset_index()
-preprocess.create_ts_pd(data, date_col='Date')
+preprocess.create_ts_pd(data, standardize_date=True, format=None, sort=True)
 output_pd = preprocess.add_ymd(data)
 
 

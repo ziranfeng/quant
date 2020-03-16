@@ -17,12 +17,6 @@ date_range = locals()['date_range']
 
 # ----------------------------------------------------------------------------------------------------------------------
 
-# Check if company data has been installed
-
-if not bucket_path_exist(create_data_path(EQUITY, 'company', comp_code.lower())):
-    % run -i 'notebooks/etl/yfinance/extraction.py'
-
-
 # Read in data from different sources
 
 start_year = dt.strptime(date_range[0], '%Y-%m-%d').year
@@ -57,9 +51,11 @@ for parent_bucket_dir in parent_bucket_list:
 pickle_list = list_bucket_path(create_data_path(EQUITY, 'company', comp_code.lower(), 'pickle'), ext='.pkl')
 version_list = [dir.split('.pkl')[0] for dir in [dir.split('/')[-1] for dir in pickle_list]]
 latest_version = max([dt.strptime(date, '%Y-%m-%d') for date in version_list]).strftime('%Y-%m-%d')
+print('Latest Version on {v}'.format(v=latest_version))
 
 local_path = bucket_to_local(create_data_path(EQUITY, 'company', comp_code.lower(), 'pickle', latest_version + '.pkl'))
+print('Saved to {local_path}'.format(local_path=local_path))
 
 with open(local_path, 'rb') as input:
     company = pickle.load(input)
-    print(company.info)
+    print(company.info['longBusinessSummary'])

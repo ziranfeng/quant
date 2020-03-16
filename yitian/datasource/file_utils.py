@@ -32,18 +32,16 @@ def create_local_path(*relative_path, base_path=LOCAL_CACHE) -> str:
     return local_path
 
 
-def bucket_to_local(path, cache=LOCAL_CACHE) -> str:
+def bucket_to_local(path, base_path=DATA_PATH) -> str:
 
-    is_absolute = path.startswith(DATA_PATH)
+    is_absolute = path.startswith(base_path)
 
-    relative_path = path.split(DATA_PATH)[1][1:] if is_absolute else path
+    relative_path = path.split(base_path)[1][1:] if is_absolute else path
 
-    local_path = os.path.join(cache, relative_path)
+    local_path = create_local_path(relative_path)
 
     if os.path.exists(local_path):
         return local_path
-
-    local_path = create_local_path(local_path)
 
     bucket_absolute_path = path if is_absolute else create_data_path(relative_path)
 
