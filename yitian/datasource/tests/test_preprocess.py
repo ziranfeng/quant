@@ -24,9 +24,10 @@ class Test(unittest.TestCase):
             [pd.Timestamp('2019-01-04'), 44.44]
         ], columns=['date', 'price']).set_index('date')
 
-        preprocess.create_ts_pd(data_pd_one, standardize_date=True, format='%m/%d/%Y')
-        assert_frame_equal(expect_pd_one, data_pd_one)
 
+        assert_frame_equal(expect_pd_one, preprocess.create_ts_pd(data_pd_one, format='%m/%d/%Y'))
+
+    def test_create_ts_pd_with_multi_date_column(self):
         data_pd_two = pd.DataFrame([
             ['2019-01-01 00:00:00', '2019-01-01 00:00:00', 11.11],
             ['2019-01-02 00:00:00', '2019-01-01 00:00:00', 22.22],

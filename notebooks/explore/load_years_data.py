@@ -1,6 +1,5 @@
 from datetime import datetime as dt
 
-
 from yitian.datasource import file_utils, load, preprocess
 
 
@@ -13,17 +12,21 @@ date_range = locals()['date_range']
 
 # ----------------------------------------------------------------------------------------------------------------------
 
+# Read in data from different sources
+
 start_year = dt.strptime(date_range[0], '%Y-%m-%d').year
 end_year = dt.strptime(date_range[1], '%Y-%m-%d').year
 
-# Read in data from different sources
+
+# Read in data into loaded_pd dict
 
 loaded_pds = {}
 
 for parent_bucket_dir in parent_bucket_list:
     print(parent_bucket_dir)
 
-    dir_list = file_utils.list_bucket_year_path(parent_bucket_dir, years=list(range(start_year, end_year+1)), ext='.csv')
+    dir_list = file_utils.list_bucket_year_path(parent_bucket_dir, years=list(range(start_year, end_year + 1)),
+                                                ext='.csv')
 
     data_pd = load.load_lists_of_csv(dir_list)
 
@@ -31,7 +34,6 @@ for parent_bucket_dir in parent_bucket_list:
 
     result_pd = preprocess.filter_dates(ts_pd, start_date=date_range[0], end_date=date_range[1])
 
-    name = parent_bucket_dir.split('/')[4:]
+    name = '_'.join(parent_bucket_dir.split('/')[4:])
 
     loaded_pds[name] = result_pd
-

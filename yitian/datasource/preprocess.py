@@ -5,7 +5,7 @@ import pandas as pd
 from yitian.datasource import *
 
 
-def create_ts_pd(data_pd: pd.DataFrame, standardize_date=True, format=None, sort=True):
+def create_ts_pd(data_pd: pd.DataFrame, standardize_date=True, format=None, sort=True) -> pd.DataFrame:
     """
     Index data_pd by `date`
 
