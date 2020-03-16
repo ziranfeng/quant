@@ -7,7 +7,7 @@ from yitian.datasource import file_utils, load, preprocess
 # | parameter     | example          |  description                             |
 # |---------------|------------------------------|------------------------------------------|
 # | date_range    | ('2017-01-01', '2020-03-13') | the target year for data extraction      |
-parent_bucket_list = locals()['parent_dir_list']
+parent_bucket_list = locals()['parent_bucket_list']
 date_range = locals()['date_range']
 
 # ----------------------------------------------------------------------------------------------------------------------
