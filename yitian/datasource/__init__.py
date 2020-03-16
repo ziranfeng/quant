@@ -12,3 +12,7 @@ DATE = 'date'
 YEAR = 'year'
 MONTH = 'month'
 DAY = 'day'
+
+# Column Standardization
+RAW_DATE_OPTIONS = {DATE, 'Date', 'DATE','Trade Date'}
+

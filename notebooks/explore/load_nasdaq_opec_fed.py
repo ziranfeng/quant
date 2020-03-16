@@ -1,50 +1,37 @@
-import pandas as pd
+from datetime import datetime as dt
+
 
 from yitian.datasource import file_utils, load, preprocess
-from yitian.datasource.quandl import nasdaq, opec, fed
-from yitian.plots.plotly import plot
 
 
 # required parameters
 # | parameter     | example          |  description                             |
 # |---------------|------------------------------|------------------------------------------|
 # | date_range    | ('2017-01-01', '2020-03-13') | the target year for data extraction      |
+parent_bucket_list = locals()['parent_dir_list']
 date_range = locals()['date_range']
 
+# ----------------------------------------------------------------------------------------------------------------------
+
+start_year = dt.strptime(date_range[0], '%Y-%m-%d').year
+end_year = dt.strptime(date_range[1], '%Y-%m-%d').year
 
 # Read in data from different sources
 
-# NASDAQ Settlement Value
+loaded_pds = {}
 
-nasdaq_settl_dir = 'gs://zhongyuan-dw/equity/nasdaq/settlement_value'
-nasdaq_settl_file_ist = file_utils.list_bucket_files(nasdaq_settl_dir)
-nasdaq_settlement_pd = load.load_lists_of_csv(nasdaq_settl_file_ist)
-preprocess.create_ts_pd(nasdaq_settlement_pd, date_col='Trade Date')
+for parent_bucket_dir in parent_bucket_list:
+    print(parent_bucket_dir)
 
+    dir_list = file_utils.list_bucket_year_path(parent_bucket_dir, years=list(range(start_year, end_year+1)), ext='.csv')
 
-# OPEC Oil Price
+    data_pd = load.load_lists_of_csv(dir_list)
 
-opec_dir = 'gs://zhongyuan-dw/commodity/opec'
-opec_file_ist = file_utils.list_bucket_files(opec_dir)
-opec_pd = load.load_lists_of_csv(opec_file_ist)
-preprocess.create_ts_pd(opec_pd, date_col='Date')
+    ts_pd = preprocess.create_ts_pd(data_pd, standardize_date=True, format=None, sort=True)
 
+    result_pd = preprocess.filter_dates(ts_pd, start_date=date_range[0], end_date=date_range[1])
 
-# US Fed Base Interest Rate
+    name = parent_bucket_dir.split('/')[4:]
 
-fed_dir = 'gs://zhongyuan-dw/interest_rate/fed/us_trsy_par_yc'
-fed_file_ist = file_utils.list_bucket_files(fed_dir)
-fed_pd = load.load_lists_of_csv(fed_file_ist)
-preprocess.create_ts_pd(fed_pd, date_col='Date')
+    loaded_pds[name] = result_pd
 
-
-# Filter data for specific date range and combine the data
-
-nasdaq_settlement_pd = preprocess.filter_dates(nasdaq_settlement_pd, start_date=date_range[0], end_date=date_range[1])
-nasdaq_settlement_pd.rename(columns={'Index Value': 'nasdaq_settlement_value'}, inplace=True)
-
-
-opec_pd = preprocess.filter_dates(opec_pd, start_date=date_range[0], end_date=date_range[1])
-opec_pd.rename(columns={'Value': 'opec_oil_price'}, inplace=True)
-
-fed_pd = preprocess.filter_dates(fed_pd, start_date=date_range[0], end_date=date_range[1])

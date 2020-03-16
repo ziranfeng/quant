@@ -2,7 +2,7 @@ import os
 
 import logging
 import subprocess
-from typing import List
+from typing import List, Union
 
 from yitian.datasource import *
 
@@ -13,8 +13,8 @@ def create_data_path(*relative_path, base_path=DATA_PATH) -> str:
     """
     Create path to project data in data warehouse on cloud from relative path components
 
-    :param relative_path: path relative  to data warehouse path
-    :param data_warehouse: data warehouse location on cloud
+    :param relative_path: path relative to base_path
+    :param base_path: initial part of path to be be joined with
 
     :return: a full path in data warehouse on cloud
     """
@@ -22,7 +22,7 @@ def create_data_path(*relative_path, base_path=DATA_PATH) -> str:
     return '/'.join([base_path] + list(relative_path))
 
 
-def create_local_path(*relative_path, base_path=LOCAL_CACHE):
+def create_local_path(*relative_path, base_path=LOCAL_CACHE) -> str:
 
     local_path = '/'.join([base_path] + list(relative_path))
 
@@ -32,7 +32,7 @@ def create_local_path(*relative_path, base_path=LOCAL_CACHE):
     return local_path
 
 
-def bucket_to_local(path, cache=LOCAL_CACHE):
+def bucket_to_local(path, cache=LOCAL_CACHE) -> str:
 
     is_relative = not path.startswith('/')
 
@@ -56,14 +56,16 @@ def bucket_to_local(path, cache=LOCAL_CACHE):
     return local_path
 
 
-def local_to_bucket(path, cache=LOCAL_CACHE):
+def local_to_bucket(path, cache=LOCAL_CACHE) -> str:
 
     is_absolute = os.path.isabs(path)
 
     cache_file = path if is_absolute else os.path.join(cache, path)
+
     bucket_path = create_data_path(path.split(cache)[1][1:])
 
     cmd = ['gsutil', 'mv', cache_file, bucket_path]
+
     try:
         subprocess.check_call(cmd, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError as e:
@@ -72,14 +74,37 @@ def local_to_bucket(path, cache=LOCAL_CACHE):
     return bucket_path
 
 
-def list_bucket_year_dir(bucket_parent_dir: str, years: List[int], ext: str=None):
+def list_bucket_path(bucket_dir: str, ext: Union[None, str]=None) -> List:
+    """
+    Genrate a list of file paths and sub directories under parent bucket directory
 
-    file_dir_list = ['/'.join([bucket_parent_dir, str(year)]) for year in years]
+    :param bucket_dir: a parent dir in cloud bucket
+    :param ext: target file extensions, if None return all sub directories
+
+    :return: a list of target file dir in cloud bucket
+    """
+    cmd = ['gsutil', 'ls', '-r', bucket_dir]
+    file_list = subprocess.check_output(cmd, universal_newlines=True).splitlines()
 
     if ext:
-        return ['/'.join([dir, '*' + ext]) for dir in file_dir_list]
-    else:
-        return ['/'.join([dir, '*']) for dir in file_dir_list]
+        file_list = [file_dir for file_dir in file_list if file_dir.endswith(ext)]
+
+    return file_list
+
+
+def list_bucket_year_path(bucket_parent_dir: str, years: List[int], ext: str=None) -> List:
+
+    if bucket_parent_dir.endswith('/'):
+        log.warning("Improvement: The parent dir shall not end with '/' ")
+        bucket_parent_dir = bucket_parent_dir[: -1]
+
+    year_dir_list = ['/'.join([bucket_parent_dir, str(year)]) for year in years]
+
+    file_dir_list = []
+    for year_dir in year_dir_list:
+        file_dir_list = file_dir_list + list_bucket_path(year_dir, ext=ext)
+
+    return file_dir_list
 
 
 def clean_bucket_dir(*relative_path):
@@ -104,29 +129,3 @@ def clean_bucket_dir(*relative_path):
         subprocess.check_call(cmd, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError as e:
         print(e)
-
-
-def list_bucket_files(bucket_parent_dir: str, file_ext='.csv') -> List:
-    """
-    Genrate a list of file dir with specified extention under parent bucket directory
-
-    :param bucket_parent_dir: a parent dir in cloud bucket containing the target files
-    :param file_ext: target file extensions
-
-    :return: a list of target file dir in cloud bucket
-    """
-
-    cmd = ['gsutil', 'ls', '-r', bucket_parent_dir]
-    output = subprocess.check_output(cmd, universal_newlines=True).splitlines()
-
-    # TODO: Due to the unknown issue with gcp storage, gsutil ls commands will return duplicated dir with '//' and '/'
-    if bucket_parent_dir.endswith('/'):
-        replace_from, replace_to = bucket_parent_dir+'/', bucket_parent_dir
-    else:
-        replace_from, replace_to = bucket_parent_dir + '//', bucket_parent_dir + '/'
-
-    dedup_sub_dir_list = list(set([dir.replace(replace_from, replace_to) for dir in output]))
-
-    file_dirs = [file_dir for file_dir in dedup_sub_dir_list if file_dir.endswith(file_ext)]
-
-    return file_dirs

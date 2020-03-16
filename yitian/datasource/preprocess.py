@@ -5,7 +5,7 @@ import pandas as pd
 from yitian.datasource import *
 
 
-def create_ts_pd(data_pd: pd.DataFrame, date_col: str=None, format=None, sort=True):
+def create_ts_pd(data_pd: pd.DataFrame, standardize_date=True, format=None, sort=True):
     """
     Index data_pd by `date`
 
@@ -14,14 +14,23 @@ def create_ts_pd(data_pd: pd.DataFrame, date_col: str=None, format=None, sort=Tr
     :param format: data frame timestamp format
     :param sort: sort the index
     """
-    if date_col:
-        data_pd.rename(index=str, columns={date_col: DATE}, inplace=True)
+    ts_pd = data_pd
+    if standardize_date:
+        date_col = list(set(ts_pd.columns.tolist()).intersection(RAW_DATE_OPTIONS))
 
-    data_pd[DATE] = pd.to_datetime(data_pd[DATE], cache=True, format=format)
-    data_pd.set_index([DATE], inplace=True)
+        if len(date_col) != 1:
+            raise ValueError("columns in dataframe ({cols}) cannot be reconnciled with date options ({option})"
+                             .format(cols=ts_pd.columns.tolist(), option=RAW_DATE_OPTIONS))
+
+        ts_pd.rename(index=str, columns={date_col[0]: DATE}, inplace=True)
+
+    ts_pd[DATE] = pd.to_datetime(ts_pd[DATE], cache=True, format=format)
+    ts_pd.set_index([DATE], inplace=True)
 
     if sort:
-        data_pd.sort_index(inplace=True)
+        ts_pd.sort_index(inplace=True)
+
+    return ts_pd
 
 
 def add_ymd(ts_pd: pd.DataFrame, sort=True):
