@@ -3,7 +3,8 @@ import pickle
 
 from yitian.datasource import *
 from yitian.datasource import load, preprocess
-from yitian.datasource.file_utils import bucket_path_exist, create_data_path, list_bucket_year_path, bucket_to_local
+from yitian.datasource.file_utils import bucket_path_exist, create_data_path, list_bucket_year_path, \
+    bucket_to_local, list_bucket_path
 
 
 # required parameters
@@ -51,9 +52,13 @@ for parent_bucket_dir in parent_bucket_list:
     print("========================================================")
 
 
-# Load Ticker object
+# Load Lastest Ticker object
 
-local_path = bucket_to_local(create_data_path(EQUITY, 'company', comp_code.lower()))
+pickle_list = list_bucket_path(create_data_path(EQUITY, 'company', comp_code.lower(), 'pickle'), ext='.pkl')
+version_list = [dir.split('.pkl')[0] for dir in [dir.split('/')[-1] for dir in pickle_list]]
+latest_version = max([dt.strptime(date, '%Y-%m-%d') for date in version_list]).strftime('%Y-%m-%d')
+
+local_path = bucket_to_local(create_data_path(EQUITY, 'company', comp_code.lower(), 'pickle', latest_version + '.pkl'))
 
 with open(local_path, 'rb') as input:
     company = pickle.load(input)
