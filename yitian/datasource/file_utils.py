@@ -105,13 +105,23 @@ def list_bucket_year_path(bucket_parent_dir: str, years: List[int], ext: str=Non
         try:
             file_dir_list = file_dir_list + list_bucket_path(year_dir, ext=ext)
         except:
-            log.warning("{year_dir} can not be reached; skipped to process others")
+            log.warning("{year_dir} cannot be reached; skipped to process others".format(year_dir=year_dir))
             continue
 
     return file_dir_list
 
 
-def clean_bucket_dir(*relative_path):
+def bucket_path_exist(bucket_dir: str):
+
+    cmd = ['gsutil', 'ls', '-L', bucket_dir]
+    try:
+        subprocess.check_call(cmd, stderr=subprocess.STDOUT)
+        return True
+    except subprocess.CalledProcessError:
+        return False
+
+
+def clean_bucket_path(*relative_path):
     """
     Create path to project data in data warehouse on cloud from relative path components
 

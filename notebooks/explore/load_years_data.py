@@ -1,16 +1,26 @@
 from datetime import datetime as dt
+import pickle
 
-from yitian.datasource import file_utils, load, preprocess
+from yitian.datasource import *
+from yitian.datasource import load, preprocess
+from yitian.datasource.file_utils import bucket_path_exist, create_data_path, list_bucket_year_path, bucket_to_local
 
 
 # required parameters
-# | parameter     | example          |  description                             |
+# | parameter     | example                      |  description                             |
 # |---------------|------------------------------|------------------------------------------|
 # | date_range    | ('2017-01-01', '2020-03-13') | the target year for data extraction      |
+comp_code = locals()['comp_code']
 parent_bucket_list = locals()['parent_bucket_list']
 date_range = locals()['date_range']
 
 # ----------------------------------------------------------------------------------------------------------------------
+
+# Check if company data has been installed
+
+if not bucket_path_exist(create_data_path(EQUITY, 'company', comp_code.lower())):
+    % run -i 'notebooks/etl/yfinance/extraction.py'
+
 
 # Read in data from different sources
 
@@ -25,8 +35,7 @@ loaded_pds = {}
 for parent_bucket_dir in parent_bucket_list:
     print(parent_bucket_dir)
 
-    dir_list = file_utils.list_bucket_year_path(parent_bucket_dir, years=list(range(start_year, end_year + 1)),
-                                                ext='.csv')
+    dir_list = list_bucket_year_path(parent_bucket_dir, years=list(range(start_year, end_year + 1)), ext='.csv')
 
     data_pd = load.load_lists_of_csv(dir_list)
 
@@ -40,3 +49,12 @@ for parent_bucket_dir in parent_bucket_list:
 
     print("{name} has been added to the data dict".format(name=name))
     print("========================================================")
+
+
+# Load Ticker object
+
+local_path = bucket_to_local(create_data_path(EQUITY, 'company', comp_code.lower()))
+
+with open(local_path, 'rb') as input:
+    company = pickle.load(input)
+    print(company.info)
