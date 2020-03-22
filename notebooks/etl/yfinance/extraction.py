@@ -28,8 +28,9 @@ stock = yf.Ticker(comp_code)
 # Extract historical price
 
 data = stock.history(period="max").reset_index()
-preprocess.create_ts_pd(data, standardize_date=True, format=None, sort=True)
-output_pd = preprocess.add_ymd(data)
+data = preprocess.standardize_date(data, target_date=None)
+ts_pd = preprocess.create_ts_pd(data, format=None, sort=True)
+output_pd = preprocess.add_ymd(ts_pd)
 
 
 # Write historical price to data warehouse by year
@@ -39,8 +40,7 @@ for year, grouped_pd in output_pd.groupby(YEAR):
     bucket_path = file_utils.create_data_path(data_category, 'company', comp_code.lower(), str(year), 'history.csv')
     grouped_pd.to_csv(bucket_path, header=True, index=True, mode='w', encoding='utf-8')
 
-    print("{company} in year {year} has been write to {output_dir}"
-          .format(company=comp_code, year=year, output_dir=bucket_path))
+    print("{company} in year {year} has been write to {output_dir}".format(company=comp_code, year=year, output_dir=bucket_path))
 
 
 # Write historical price to data warehouse by company

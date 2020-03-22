@@ -1,39 +1,58 @@
 from typing import List, Dict
+import re
+from datetime import datetime as dt
 import pandas as pd
 
 
 from yitian.datasource import *
 
 
-def create_ts_pd(data_pd: pd.DataFrame, standardize_date=True, format=None, sort=True) -> pd.DataFrame:
+def standardize_date(data_pd: pd.DataFrame, target_date: str=None) -> pd.DataFrame:
+
+    if target_date:
+        data_pd.rename(columns={target_date: DATE}, inplace=True)
+
+    else:
+        original_cols = data_pd.columns.tolist()
+        date_col = list(set(original_cols).intersection(RAW_DATE_OPTIONS))
+
+        if len(date_col) != 1:
+            raise ValueError("Original cols ({cols}) cannot be reconnciled with date options ({option})"
+                             .format(cols=original_cols, option=RAW_DATE_OPTIONS))
+
+        data_pd.rename(columns={date_col[0]: DATE}, inplace=True)
+
+    return data_pd
+
+
+def create_ts_pd(data_pd: pd.DataFrame, format=None, sort=True) -> pd.DataFrame:
     """
     Index data_pd by `date`
 
-    :param data_pd: `date` per row
-    :param date_col: if not None, rename date_col to `date`
+    :param data_pd: `date` or optional 'date' per row
     :param format: data frame timestamp format
     :param sort: sort the index
+
+    :return: a data frame indexed by `date`
     """
-    ts_pd = data_pd
-    if standardize_date:
-        date_col = list(set(ts_pd.columns.tolist()).intersection(RAW_DATE_OPTIONS))
-
-        if len(date_col) != 1:
-            raise ValueError("columns in dataframe ({cols}) cannot be reconnciled with date options ({option})"
-                             .format(cols=ts_pd.columns.tolist(), option=RAW_DATE_OPTIONS))
-
-        ts_pd.rename(index=str, columns={date_col[0]: DATE}, inplace=True)
-
-    ts_pd[DATE] = pd.to_datetime(ts_pd[DATE], cache=True, format=format)
-    ts_pd.set_index([DATE], inplace=True)
+    data_pd[DATE] = pd.to_datetime(data_pd[DATE], cache=True, format=format)
+    data_pd.set_index([DATE], inplace=True)
 
     if sort:
-        ts_pd.sort_index(inplace=True)
+        data_pd.sort_index(inplace=True)
 
-    return ts_pd
+    return data_pd
 
 
 def add_ymd(ts_pd: pd.DataFrame, sort=True):
+    """
+    Add `year`, `month` and `day` to ts_pd
+
+    :param ts_pd: pd indexed by `date`
+    :param sort: sort the index
+
+    :return: ts_pd with additional columns `year`, `month` and `day`
+    """
 
     data_pd = ts_pd.reset_index()
 
@@ -51,19 +70,30 @@ def add_ymd(ts_pd: pd.DataFrame, sort=True):
 
 def filter_dates(ts_pd: pd.DataFrame, start_date: str=None, end_date: str=None) -> pd.DataFrame:
     """
+    Filter ts_pd on date range and fill the missing dates with `Null`
 
-    :param ts_pd:
-    :param start_date:
-    :param end_date:
-    :return:
+    :param ts_pd: ts_pd indexed by `date`
+    :param start_date: start date
+    :param end_date: end date
+
+    :return: filtered ts_pd
     """
     start_date = ts_pd.index.min() if start_date is None else start_date
     end_date = ts_pd.index.max() if end_date is None else end_date
 
     date_range_pd = pd.DataFrame(index=pd.date_range(start_date, end_date, name='date'))
-    if start_date:
-        ts_pd = ts_pd.loc[ts_pd.index >= start_date]
-    if end_date:
-        ts_pd = ts_pd.loc[ts_pd.index <= end_date]
+    ts_pd = ts_pd.loc[(ts_pd.index >= start_date) & (ts_pd.index <= end_date)]
 
     return date_range_pd.merge(ts_pd, how='left', on=DATE)
+
+
+def find_latest_date(string_list: List) -> str:
+
+    date_list = [_extract_date(s) for s in string_list]
+    min_date = pd.to_datetime(date_list, format='%Y-%m-%d').min().date()
+
+    return str(min_date)
+
+
+def _extract_date(string: str):
+    return re.search('\d{4}-\d{2}-\d{2}', string).group()
