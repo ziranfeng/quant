@@ -46,7 +46,8 @@ setup(
         'timezonefinder>=4.1.0',
         'tsfresh>=0.10.0',
         'pandas_datareader>=0.8.0',
-        'yfinance>=0.1.50'
+        'yfinance>=0.1.50',
+        'pymysql>=0.7'
     ],
     tests_require=tests_require,
     extras_require={

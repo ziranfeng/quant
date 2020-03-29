@@ -18,3 +18,4 @@ timezonefinder==4.1.0
 tsfresh==0.10.0
 pandas_datareader==0.8.0
 yfinance==0.1.54
+pymysql==0.7.2

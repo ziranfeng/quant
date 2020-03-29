@@ -2,16 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="061e8099-0970-4414-a918-8b071017eaae" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/notebooks/etl/yfinance/load_stock_price.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/etl/yfinance/extraction.py" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/yfinance/extraction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/explore/load_years_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/explore/load_years_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/etl/quandl/fed.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/quandl/fed.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/etl/quandl/nasdaq.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/quandl/nasdaq.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/etl/quandl/opec.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/quandl/opec.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/etl/quandl/update.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/quandl/update.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/etl/yfinance/company.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/yfinance/update.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/etl/yfinance/extraction.py" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/yfinance/update_daily.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements/quandl.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements/quant.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yitian/datasource/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yitian/datasource/file_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/file_utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yitian/datasource/load.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/load.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yitian/datasource/preprocess.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/preprocess.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yitian/datasource/quandl/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/quandl/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yitian/datasource/tests/test_file_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/tests/test_file_utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yitian/datasource/tests/test_preprocess.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/tests/test_preprocess.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yitian/datasource/yfinance/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/yfinance/__init__.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +46,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/notebooks/etl/yfinance" />
       <recent name="$PROJECT_DIR$/yitian/datasource/tests" />
       <recent name="$PROJECT_DIR$/notebooks/ETL/quandl" />
     </key>

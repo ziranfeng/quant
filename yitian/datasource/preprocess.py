@@ -7,24 +7,6 @@ import pandas as pd
 from yitian.datasource import *
 
 
-def standardize_date(data_pd: pd.DataFrame, target_date: str=None) -> pd.DataFrame:
-
-    if target_date:
-        data_pd.rename(columns={target_date: DATE}, inplace=True)
-
-    else:
-        original_cols = data_pd.columns.tolist()
-        date_col = list(set(original_cols).intersection(RAW_DATE_OPTIONS))
-
-        if len(date_col) != 1:
-            raise ValueError("Original cols ({cols}) cannot be reconnciled with date options ({option})"
-                             .format(cols=original_cols, option=RAW_DATE_OPTIONS))
-
-        data_pd.rename(columns={date_col[0]: DATE}, inplace=True)
-
-    return data_pd
-
-
 def create_ts_pd(data_pd: pd.DataFrame, format=None, sort=True) -> pd.DataFrame:
     """
     Index data_pd by `date`
@@ -35,8 +17,11 @@ def create_ts_pd(data_pd: pd.DataFrame, format=None, sort=True) -> pd.DataFrame:
 
     :return: a data frame indexed by `date`
     """
-    data_pd[DATE] = pd.to_datetime(data_pd[DATE], cache=True, format=format)
-    data_pd.set_index([DATE], inplace=True)
+    if DATETIME not in data_pd.columns:
+        raise ValueError(f"{DATETIME} is not appeared in ({data_pd.columns})")
+
+    data_pd[DATETIME] = pd.to_datetime(data_pd[DATETIME], cache=True, format=format)
+    data_pd.set_index([DATETIME], inplace=True)
 
     if sort:
         data_pd.sort_index(inplace=True)
@@ -56,11 +41,11 @@ def add_ymd(ts_pd: pd.DataFrame, sort=True):
 
     data_pd = ts_pd.reset_index()
 
-    data_pd[YEAR] = pd.DatetimeIndex(data_pd[DATE]).year
-    data_pd[MONTH] = pd.DatetimeIndex(data_pd[DATE]).month
-    data_pd[DAY] = pd.DatetimeIndex(data_pd[DATE]).day
+    data_pd[YEAR] = pd.DatetimeIndex(data_pd[DATETIME]).year
+    data_pd[MONTH] = pd.DatetimeIndex(data_pd[DATETIME]).month
+    data_pd[DAY] = pd.DatetimeIndex(data_pd[DATETIME]).day
 
-    data_pd.set_index([DATE], inplace=True)
+    data_pd.set_index([DATETIME], inplace=True)
 
     if sort:
         data_pd.sort_index(inplace=True)
