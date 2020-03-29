@@ -7,7 +7,7 @@ import pandas as pd
 from yitian.datasource import *
 
 
-def create_ts_pd(data_pd: pd.DataFrame, format=None, sort=True) -> pd.DataFrame:
+def create_ts_pd(data_pd: pd.DataFrame, format=None, sort=True, index_col=DATE) -> pd.DataFrame:
     """
     Index data_pd by `date`
 
@@ -17,11 +17,11 @@ def create_ts_pd(data_pd: pd.DataFrame, format=None, sort=True) -> pd.DataFrame:
 
     :return: a data frame indexed by `date`
     """
-    if DATETIME not in data_pd.columns:
-        raise ValueError(f"{DATETIME} is not appeared in ({data_pd.columns})")
+    if index_col not in data_pd.columns:
+        raise ValueError(f"{index_col} is not appeared in ({data_pd.columns})")
 
-    data_pd[DATETIME] = pd.to_datetime(data_pd[DATETIME], cache=True, format=format)
-    data_pd.set_index([DATETIME], inplace=True)
+    data_pd[index_col] = pd.to_datetime(data_pd[index_col], cache=True, format=format)
+    data_pd.set_index([index_col], inplace=True)
 
     if sort:
         data_pd.sort_index(inplace=True)
@@ -29,7 +29,7 @@ def create_ts_pd(data_pd: pd.DataFrame, format=None, sort=True) -> pd.DataFrame:
     return data_pd
 
 
-def add_ymd(ts_pd: pd.DataFrame, sort=True):
+def add_ymd(ts_pd: pd.DataFrame, sort=True, index_col=DATE):
     """
     Add `year`, `month` and `day` to ts_pd
 
@@ -41,11 +41,11 @@ def add_ymd(ts_pd: pd.DataFrame, sort=True):
 
     data_pd = ts_pd.reset_index()
 
-    data_pd[YEAR] = pd.DatetimeIndex(data_pd[DATETIME]).year
-    data_pd[MONTH] = pd.DatetimeIndex(data_pd[DATETIME]).month
-    data_pd[DAY] = pd.DatetimeIndex(data_pd[DATETIME]).day
+    data_pd[YEAR] = pd.DatetimeIndex(data_pd[index_col]).year
+    data_pd[MONTH] = pd.DatetimeIndex(data_pd[index_col]).month
+    data_pd[DAY] = pd.DatetimeIndex(data_pd[index_col]).day
 
-    data_pd.set_index([DATETIME], inplace=True)
+    data_pd.set_index([index_col], inplace=True)
 
     if sort:
         data_pd.sort_index(inplace=True)

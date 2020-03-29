@@ -25,6 +25,15 @@ MONTH = 'month'
 DAY = 'day'
 UPDATED_AT = 'updated_at'
 
+OPEN = 'open'
+HIGH = 'high'
+LOW = 'low'
+CLOSE = 'close'
+VOLUME = 'volume'
+
+TICKER = 'ticker'
+
+
 # Column Standardization
 RAW_DATE_OPTIONS = {DATE, 'Date', 'DATE', 'Trade Date'}
 

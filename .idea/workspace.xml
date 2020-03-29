@@ -2,19 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="061e8099-0970-4414-a918-8b071017eaae" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/notebooks/etl/yfinance/load_stock_price.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notebooks/etl/yfinance/load_stock_price_hourly.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/etl/quandl/fed.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/quandl/fed.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/etl/quandl/nasdaq.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/quandl/nasdaq.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/etl/quandl/opec.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/quandl/opec.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/etl/quandl/update.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/quandl/update.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/etl/yfinance/company.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/yfinance/update.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/etl/yfinance/extraction.py" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/yfinance/update_daily.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements/quandl.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements/quant.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/etl/yfinance/load_stock_price.py" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/yfinance/load_stock_price_daily.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yitian/datasource/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yitian/datasource/preprocess.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/preprocess.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yitian/datasource/yfinance/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/yfinance/__init__.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

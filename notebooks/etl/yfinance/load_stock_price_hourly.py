@@ -3,8 +3,8 @@ import pandas as pd
 import pymysql
 import yfinance as yf
 
-from yitian.datasource import HOST, USER, DATABASE, EQUITY, DATETIME, YEAR, UPDATED_AT, file_utils, preprocess
-from yitian.datasource.yfinance import *
+from yitian.datasource import *
+from yitian.datasource import file_utils, preprocess
 
 
 # required parameters
@@ -15,29 +15,23 @@ from yitian.datasource.yfinance import *
 # | table_name    | 'nasdaq_daily'   | the output table in DB                   |
 password = locals()['password']
 ticker = locals()['ticker']
+period = locals()['period']
 table_name = locals()['table_name']
 
 
-# optional parameters
-# | parameter     |  description                             |
-# |---------------|------------------------------------------|
-# | data_category | the general category of the data         |
-period = locals().get('period', '1d')
-interval = locals().get('period', '1d')
-
-
-if interval=='60m':
-    period ='2y' if period.isin(['5y', '10y', 'max']) else period
-
-
 # Set up cloud sql connections
+
 connection = pymysql.connect(host=HOST,
                              user=USER,
                              password=password,
                              db=DATABASE)
 
 
+
+period = '2y' if period.isin(['5y', '10y', 'max']) else period
+
 # Read In Data
+
 data_pd = yf.download(  # or pdr.get_data_yahoo(...
     # tickers list or string as well
     tickers = ticker,
@@ -50,7 +44,7 @@ data_pd = yf.download(  # or pdr.get_data_yahoo(...
     # fetch data by interval (including intraday if period < 60 days)
     # valid intervals: 1m,2m,5m,15m,30m,60m,90m,1h,1d,5d,1wk,1mo,3mo
     # (optional, default is '1d')
-    interval = interval,
+    interval = '60m',
 
     # group by ticker (to access via data['SPY'])
     # (optional, default is 'column')
@@ -73,27 +67,24 @@ data_pd = yf.download(  # or pdr.get_data_yahoo(...
     proxy = None
 )
 
-if interval=='60m':
-    data_pd['Datetime'] = [pd.Timestamp(dt[:19]) for dt in data_pd['Datetime'].astype('str')]
-
-
-data_pd.rename(columns={'Datetime': DATETIME,
-                        'Open': OPEN,
-                        'High': HIGH,
-                        'Low': LOW,
-                        'Close': CLOSE,
-                        'Volume': VOLUME},
-               inplace=True)
-
 
 # Standardize data_pd
-ts_pd = preprocess.create_ts_pd(data_pd, format=None, sort=True)
+
+data_pd = data_pd.reset_index().rename(columns={'Datetime': DATETIME,
+                                                'Open': OPEN,
+                                                'High': HIGH,
+                                                'Low': LOW,
+                                                'Close': CLOSE,
+                                                'Volume': VOLUME})
+
+ts_pd = preprocess.create_ts_pd(data_pd, format=None, sort=True, index_col=DATETIME)
 ts_pd = preprocess.add_ymd(ts_pd)
 ts_pd[TICKER] = ticker
 ts_pd[UPDATED_AT] = dt.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
 # Write historical price to data warehouse by year
+
 for year, grouped_pd in ts_pd.groupby(YEAR):
     bucket_path = file_utils.create_data_path(EQUITY, 'company', ticker.lower(), str(year), f'{interval}.csv')
     grouped_pd.to_csv(bucket_path, header=True, index=True, mode='w', encoding='utf-8')
