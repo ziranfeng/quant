@@ -3,7 +3,7 @@ DATA_PATH = 'gs://zhongyuan-dw'
 LOCAL_CACHE = '/home/jupyter/local_cache'
 
 # Cloud SQL
-HOST='10.101.224.3'
+PRIVATE_HOST= '10.101.224.3'
 USER='root'
 DATABASE='quant'
 
@@ -18,6 +18,7 @@ EQUITY = 'equity'
 
 
 # Shared Columns Names
+TICKER = 'ticker'
 DATETIME = 'datetime'
 DATE = 'date'
 YEAR = 'year'
@@ -31,8 +32,8 @@ LOW = 'low'
 CLOSE = 'close'
 VOLUME = 'volume'
 
-TICKER = 'ticker'
-
+DIVIDENDS = 'dividends'
+SPLITS = 'splits'
 
 # Column Standardization
 RAW_DATE_OPTIONS = {DATE, 'Date', 'DATE', 'Trade Date'}

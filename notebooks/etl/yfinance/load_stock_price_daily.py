@@ -12,6 +12,7 @@ from yitian.datasource import file_utils, preprocess
 # |---------------|------------------|------------------------------------------|
 # | password      | 'keepsecret'     | SQL password                             |
 # | ticker        | ['MSFT']         | the target year for data extraction      |
+# | period        | '1d'             | data extraction period                   |
 # | table_name    | 'nasdaq_daily'   | the output table in DB                   |
 password = locals()['password']
 ticker = locals()['ticker']
@@ -21,7 +22,7 @@ table_name = locals()['table_name']
 
 # Set up cloud sql connections
 
-connection = pymysql.connect(host=HOST,
+connection = pymysql.connect(host=PRIVATE_HOST,
                              user=USER,
                              password=password,
                              db=DATABASE)
@@ -89,8 +90,7 @@ for year, grouped_pd in ts_pd.groupby(YEAR):
 
 
 try:
-    sql_pd = ts_pd.reset_index()
-    sql_pd.to_sql(name=table_name, con=connection, if_exists='append')
+    ts_pd.to_sql(name=table_name, con=connection, if_exists='append', index=True)
 
 except ValueError as e:
     print(e)

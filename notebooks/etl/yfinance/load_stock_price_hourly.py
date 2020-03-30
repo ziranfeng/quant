@@ -21,7 +21,7 @@ table_name = locals()['table_name']
 
 # Set up cloud sql connections
 
-connection = pymysql.connect(host=HOST,
+connection = pymysql.connect(host=PRIVATE_HOST,
                              user=USER,
                              password=password,
                              db=DATABASE)
