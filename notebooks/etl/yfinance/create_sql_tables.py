@@ -1,16 +1,9 @@
-import pymysql
 
-from yitian.datasource import *
-
-# input password from console
-password = locals()['password']
-
-
-# Set up cloud sql connections
-connection = pymysql.connect(host=PRIVATE_HOST,
-                             user=USER,
-                             password=password,
-                             db=DATABASE)
+# required parameters
+# | parameter     | example          |  description                             |
+# |---------------|------------------|------------------------------------------|
+# | connection    | connection       | the output table in DB                   |
+connection = locals()['connection']
 
 
 # CREATE TABLES IF NOT EXIST
@@ -144,6 +137,3 @@ with connection.cursor() as cursor:
 # connection is not autocommit by default. So you must commit to save your changes.
 connection.commit()
 
-
-# Close connection
-connection.close()
