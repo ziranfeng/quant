@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="061e8099-0970-4414-a918-8b071017eaae" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/etl/yfinance/company.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/etl/yfinance/load_stock_price_daily.py" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/yfinance/load_stock_price_daily.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/etl/yfinance/load_stock_price_hourly.py" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/yfinance/load_stock_price_hourly.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/etl/yfinance/batch_load.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/yfinance/batch_load.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
