@@ -91,9 +91,24 @@ for year, grouped_pd in ts_pd.groupby(YEAR):
     print(f"{ticker} in year {year} has been write to {bucket_path}")
 
 
-try:
-    sql_pd = ts_pd.reset_index()
-    sql_pd.to_sql(name=table_name, con=connection, if_exists='append')
+# CREATE TABLES IF NOT EXIST
+with connection.cursor() as cursor:
+    for index, row in ts_pd.iterrows():
+        print(row)
+        sql = """
+        INSERT INTO {table_name}([{ticker}], [{datetime}], [{open}], [{high}], [{low}], [{close}], [{volume}], [{year}], [{month}], [{day}], [{updated_at}]) 
+        VALUES({ticker_v}, {date_v}, {open_v}, {high_v}, {low_v}, {close_v}, {volume_v}, {year_v}, {month_v}, {day_v}, {updated_at_v})
+        """.format(table_name=table_name,
+                   ticker=TICKER,
+                   datetime=DATETIME,
+                   open=OPEN, high=HIGH, low=LOW, close=CLOSE, volume=VOLUME,
+                   year=YEAR, month=MONTH, day=DAY, updated_at=UPDATED_AT,
+                   ticker_v=row[TICKER],
+                   date_v=row[DATETIME],
+                   open_v=row[OPEN], high_v=row[HIGH], low_v=row[LOW], close_v=row[CLOSE], volume_v=row[VOLUME],
+                   year_v=row[YEAR], month_v=row[MONTH], day_v=row[DAY], updated_at_v=row[UPDATED_AT])
 
-except ValueError as e:
-    print(e)
+        cursor.execute(sql)
+
+        # connection is not autocommit by default. So you must commit to save your changes.
+        connection.commit()

@@ -88,9 +88,3 @@ for year, grouped_pd in ts_pd.groupby(YEAR):
     grouped_pd.to_csv(bucket_path, header=True, index=True, mode='w', encoding='utf-8')
     print(f"{ticker} in year {year} has been write to {bucket_path}")
 
-
-try:
-    ts_pd.to_sql(name=table_name, con=connection, if_exists='append', index=True)
-
-except ValueError as e:
-    print(e)

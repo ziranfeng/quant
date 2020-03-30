@@ -16,6 +16,7 @@ connection = pymysql.connect(host=PRIVATE_HOST,
 # CREATE TABLES IF NOT EXIST
 with connection.cursor() as cursor:
 
+
     # Create NASDAQ ticker table
     sql = """
             CREATE TABLE IF NOT EXISTS nasdaq(
@@ -56,6 +57,7 @@ with connection.cursor() as cursor:
                 open FLOAT NOT NULL,
                 high FLOAT NOT NULL,
                 low FLOAT NOT NULL,
+                close FLOAT NOT NULL,
                 volume FLOAT DEFAULT 0.0 NOT NULL,
                 year INT NOT NULL,
                 month INT NOT NULL,
@@ -74,6 +76,7 @@ with connection.cursor() as cursor:
                 open FLOAT NOT NULL,
                 high FLOAT NOT NULL,
                 low FLOAT NOT NULL,
+                close FLOAT NOT NULL,
                 volume FLOAT DEFAULT 0.0 NOT NULL,
                 year INT NOT NULL,
                 month INT NOT NULL,
