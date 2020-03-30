@@ -32,7 +32,7 @@ connection = pymysql.connect(host=PRIVATE_HOST,
 
 data_pd = yf.download(  # or pdr.get_data_yahoo(...
     # tickers list or string as well
-    tickers = ticker,
+    tickers = [ticker],
 
     # use "period" instead of start/end
     # valid periods: 1d,5d,1mo,3mo,6mo,1y,2y,5y,10y,ytd,max
