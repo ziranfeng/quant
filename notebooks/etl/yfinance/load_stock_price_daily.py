@@ -81,7 +81,7 @@ for year, grouped_pd in ts_pd.groupby(YEAR):
 ts_pd.reset_index(inplace=True)
 
 with connection.cursor() as cursor:
-    for index, row in ts_pd.head(5).iterrows():
+    for index, row in ts_pd.iterrows():
         sql = """
         INSERT INTO {table_name}({ticker}, {datetime}, {open}, {high}, {low}, {close}, {volume}, {year}, {month}, {day}, {updated_at}) 
         VALUES('{ticker_v}', '{datetime_v}', {open_v}, {high_v}, {low_v}, {close_v}, {volume_v}, {year_v}, {month_v}, {day_v}, '{updated_at_v}');
