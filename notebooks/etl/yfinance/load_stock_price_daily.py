@@ -68,15 +68,15 @@ data_pd = yf.download(  # or pdr.get_data_yahoo(...
 
 # Standardize data_pd
 
-data_pd = data_pd.reset_index().rename(columns={'Date': DATE,
+data_pd = data_pd.reset_index().rename(columns={'Date': DATETIME,
                                                 'Open': OPEN,
                                                 'High': HIGH,
                                                 'Low': LOW,
                                                 'Close': CLOSE,
                                                 'Volume': VOLUME})
 
-ts_pd = preprocess.create_ts_pd(data_pd, format=None, sort=True, index_col=DATE)
-ts_pd = preprocess.add_ymd(ts_pd)
+ts_pd = preprocess.create_ts_pd(data_pd, format=None, sort=True, index_col=DATETIME)
+ts_pd = preprocess.add_ymd(ts_pd, index_col=DATETIME)
 ts_pd[TICKER] = ticker
 ts_pd[UPDATED_AT] = dt.now().strftime("%Y-%m-%d %H:%M:%S")
 

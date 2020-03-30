@@ -53,7 +53,7 @@ with connection.cursor() as cursor:
     sql = """
             CREATE TABLE IF NOT EXISTS nasdaq_daily(
                 ticker VARCHAR(10),
-                date DATE NOT NULL,
+                datetime TIMESTAMP NOT NULL,
                 open FLOAT NOT NULL,
                 high FLOAT NOT NULL,
                 low FLOAT NOT NULL,
@@ -63,7 +63,7 @@ with connection.cursor() as cursor:
                 month INT NOT NULL,
                 day INT NOT NULL,
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-            PRIMARY KEY(ticker, date));
+            PRIMARY KEY(ticker, datetime));
     """
     cursor.execute(sql)
 
