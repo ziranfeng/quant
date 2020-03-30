@@ -1,6 +1,4 @@
 from datetime import datetime as dt
-import pandas as pd
-import pymysql
 import yfinance as yf
 
 from yitian.datasource import *
@@ -10,26 +8,18 @@ from yitian.datasource import file_utils, preprocess
 # required parameters
 # | parameter     | example          |  description                             |
 # |---------------|------------------|------------------------------------------|
-# | password      | 'keepsecret'     | SQL password                             |
 # | ticker        | ['MSFT']         | the target year for data extraction      |
 # | period        | '1d'             | data extraction period                   |
 # | table_name    | 'nasdaq_daily'   | the output table in DB                   |
-password = locals()['password']
+# | connection    | connection       | the output table in DB                   |
 ticker = locals()['ticker']
 period = locals()['period']
 table_name = locals()['table_name']
+connection = locals()['connection']
 
-
-# Set up cloud sql connections
-
-connection = pymysql.connect(host=PRIVATE_HOST,
-                             user=USER,
-                             password=password,
-                             db=DATABASE)
-
+# ====================================================================================================================
 
 # Read In Data
-
 data_pd = yf.download(  # or pdr.get_data_yahoo(...
     # tickers list or string as well
     tickers = [ticker],
@@ -67,7 +57,6 @@ data_pd = yf.download(  # or pdr.get_data_yahoo(...
 
 
 # Standardize data_pd
-
 data_pd = data_pd.reset_index().rename(columns={'Date': DATETIME,
                                                 'Open': OPEN,
                                                 'High': HIGH,
@@ -82,9 +71,38 @@ ts_pd[UPDATED_AT] = dt.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
 # Write historical price to data warehouse by year
-
 for year, grouped_pd in ts_pd.groupby(YEAR):
     bucket_path = file_utils.create_data_path(EQUITY, 'company', ticker.lower(), str(year), 'daily.csv')
     grouped_pd.to_csv(bucket_path, header=True, index=True, mode='w', encoding='utf-8')
     print(f"{ticker} in year {year} has been write to {bucket_path}")
+
+
+# Insert data into SQL table
+ts_pd.reset_index(inplace=True)
+
+with connection.cursor() as cursor:
+    for index, row in ts_pd.head(5).iterrows():
+        sql = """
+        INSERT INTO {table_name}({ticker}, {datetime}, {open}, {high}, {low}, {close}, {volume}, {year}, {month}, {day}, {updated_at}) 
+        VALUES('{ticker_v}', '{datetime_v}', {open_v}, {high_v}, {low_v}, {close_v}, {volume_v}, {year_v}, {month_v}, {day_v}, '{updated_at_v}');
+        """.format(table_name=table_name,
+                   ticker=TICKER,
+                   datetime=DATETIME,
+
+                   open=OPEN, high=HIGH, low=LOW, close=CLOSE, volume=VOLUME,
+                   year=YEAR, month=MONTH, day=DAY, updated_at=UPDATED_AT,
+
+                   ticker_v=row[TICKER],
+                   datetime_v=row[DATETIME],
+
+                   open_v=row[OPEN], high_v=row[HIGH], low_v=row[LOW], close_v=row[CLOSE], volume_v=row[VOLUME],
+                   year_v=row[YEAR], month_v=row[MONTH], day_v=row[DAY], updated_at_v=row[UPDATED_AT])
+
+        print(sql)
+        cursor.execute(sql)
+
+        # connection is not autocommit by default. So you must commit to save your changes.
+        connection.commit()
+
+cursor.close()
 
