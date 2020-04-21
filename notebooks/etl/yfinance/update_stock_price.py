@@ -1,4 +1,8 @@
+# This script extract stock price for given period & interval
+# and write to cloud storage
+
 from datetime import datetime as dt
+import pymysql
 import yfinance as yf
 
 from yitian.datasource import *
@@ -15,8 +19,14 @@ from yitian.datasource import file_utils, preprocess
 ticker = locals()['ticker']
 period = locals()['period']
 table_name = locals()['table_name']
-connection = locals()['connection']
 
+
+# Set up cloud sql connections
+password = 'jinyongwuxia'
+connection = pymysql.connect(host=PRIVATE_HOST,
+                             user=USER,
+                             password=password,
+                             db=DATABASE)
 
 # ====================================================================================================================
 

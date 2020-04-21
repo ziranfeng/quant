@@ -1,9 +1,16 @@
+# The script contains the initial `CREATE TABLE` commands for database
 
-# required parameters
-# | parameter     | example          |  description                             |
-# |---------------|------------------|------------------------------------------|
-# | connection    | connection       | the output table in DB                   |
-connection = locals()['connection']
+import pymysql
+
+from yitian.datasource import *
+
+
+# Set up cloud sql connections
+password = locals().get('password', 'jinyongwuxia')
+connection = pymysql.connect(host=PRIVATE_HOST,
+                             user=USER,
+                             password=password,
+                             db=DATABASE)
 
 
 # CREATE TABLES IF NOT EXIST
@@ -135,4 +142,3 @@ with connection.cursor() as cursor:
 
 # connection is not autocommit by default. So you must commit to save your changes.
 connection.commit()
-
