@@ -1,8 +1,7 @@
 from datetime import datetime as dt
 import pickle
 
-from yitian.datasource import *
-from yitian.datasource import load, preprocess
+from yitian.datasource import load, preprocess, EQUITY
 from yitian.datasource.file_utils import create_data_path, list_bucket_year_path, \
     bucket_to_local, list_bucket_path
 
@@ -11,6 +10,7 @@ from yitian.datasource.file_utils import create_data_path, list_bucket_year_path
 # | parameter     | example                      |  description                             |
 # |---------------|------------------------------|------------------------------------------|
 # | date_range    | ('2017-01-01', '2020-03-13') | the target year for data extraction      |
+
 comp_code = locals()['comp_code']
 parent_bucket_list = locals()['parent_bucket_list']
 date_range = locals()['date_range']

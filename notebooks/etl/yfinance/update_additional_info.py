@@ -3,15 +3,14 @@ import pandas as pd
 import yfinance as yf
 import pickle
 
-from yitian.datasource import yfinance
 from yitian.datasource import *
-from yitian.datasource import file_utils, preprocess
-
+from yitian.datasource import file_utils, preprocess, EQUITY
 
 # required parameters
 # | parameter     | example          |  description                             |
 # |---------------|------------------|------------------------------------------|
 # | ticker        | 'MSFT'           | the target year for data extraction      |
+
 ticker = locals()['ticker']
 
 # optional parameters

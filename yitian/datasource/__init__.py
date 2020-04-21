@@ -1,23 +1,24 @@
 # Cloud Storage
+
 DATA_PATH = 'gs://zhongyuan-dw'
 LOCAL_CACHE = '/home/jupyter/local_cache'
 
 # Cloud SQL
+INSTANCE = 'dev-xiangyang'
 PRIVATE_HOST= '10.101.224.3'
 USER='root'
 DATABASE='quant'
-
 NASDAQ_DAILY = 'nasdaq_daily'
 NASDAQ_HOURLY = 'nasdaq_hourly'
 
-
 # Data Category
+
 COMMODITY = 'commodity'
 INTEREST_RATE_AND_FIXED_INCOME = 'interest_rate_and_fix_income'
 EQUITY = 'equity'
 
-
 # Shared Columns Names
+
 TICKER = 'ticker'
 DATETIME = 'datetime'
 DATE = 'date'
@@ -36,5 +37,5 @@ DIVIDENDS = 'dividends'
 SPLITS = 'splits'
 
 # Column Standardization
-RAW_DATE_OPTIONS = {DATE, 'Date', 'DATE', 'Trade Date'}
 
+RAW_DATES = {DATE, 'Date', 'DATE', 'Trade Date'}

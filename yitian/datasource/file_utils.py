@@ -4,7 +4,7 @@ import logging
 import subprocess
 from typing import List, Union
 
-from yitian.datasource import *
+from yitian.datasource import DATA_PATH, LOCAL_CACHE
 
 log = logging.getLogger(__name__)
 

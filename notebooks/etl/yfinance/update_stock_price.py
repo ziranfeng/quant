@@ -6,8 +6,7 @@ import pymysql
 import yfinance as yf
 
 from yitian.datasource import *
-from yitian.datasource import file_utils, preprocess
-
+from yitian.datasource import file_utils, preprocess, PRIVATE_HOST, USER, DATABASE, EQUITY
 
 # required parameters
 # | parameter     | example          |  description                             |
@@ -16,6 +15,7 @@ from yitian.datasource import file_utils, preprocess
 # | period        | '1d'             | data extraction period                   |
 # | table_name    | 'nasdaq_daily'   | the output table in DB                   |
 # | connection    | connection       | the output table in DB                   |
+
 ticker = locals()['ticker']
 period = locals()['period']
 table_name = locals()['table_name']

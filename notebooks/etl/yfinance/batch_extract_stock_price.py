@@ -6,8 +6,7 @@ from datetime import datetime as dt
 import yfinance as yf
 
 from yitian.datasource import *
-from yitian.datasource import file_utils, preprocess
-
+from yitian.datasource import file_utils, cloud_utils, preprocess, EQUITY
 
 # required parameters
 # | parameter       | example          |  description                             |
@@ -15,7 +14,12 @@ from yitian.datasource import file_utils, preprocess
 # | ticker          | ['MSFT']         | the target year for data extraction      |
 # | period_interval | ('max', '1d')    | data extraction period                   |
 ticker = locals()['ticker']
+
 period_interval = locals().get('period_interval', ('max', '1d'))
+instance = locals().get('instance', INSTANCE)
+database = locals().get('database', DATABASE)
+table = locals().get('table', NASDAQ_DAILY)
+
 
 # --------------------------------------------------------------------------------------------------------------------
 
@@ -94,9 +98,12 @@ try:
 
     # write batch data price to data storage by year
     for year, grouped_pd in ts_pd.groupby(YEAR):
+
         bucket_path = file_utils.create_data_path(EQUITY, 'company', ticker.lower(), str(year), output_file)
         grouped_pd.to_csv(bucket_path, header=True, index=True, mode='w', encoding='utf-8')
         print(f"{ticker} in year {year} has been write to {bucket_path}")
+
+        cloud_utils.csv_to_mysql(mysql_instance=instance, file_path=bucket_path, table=table, database=database)
 
 
 except Exception as err:
