@@ -19,7 +19,6 @@ ticker = locals()['ticker']
 # |---------------|------------------------------------------|
 # | data_category | the general category of the data         |
 data_category = locals().get('data_type', EQUITY)
-period = locals().get('period', '1d')
 
 
 #-----------------------------------------------------------------------------------------------------------------------
@@ -51,16 +50,18 @@ action_pd[TICKER] = ticker
 
 # stock_holders
 stock_holder_pd = pd.DataFrame([[num.split('%')[0] for num in stock.major_holders[0].tolist()]],
-                               columns=['insider_share_pct', 'institution_share_pct',
-                                        'institution_float_pct', 'institution_number'])
+                               columns=['insider_share_pct', 'institution_share_pct', 'institution_float_pct', 'institution_number'])
 stock_holder_pd[TICKER] = ticker
 stock_holder_pd[UPDATED_AT] = dt.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
 # institutional_holders
-institutional_holders_pd = stock.institutional_holders.rename(columns={'Holder': 'holder', 'Shares': 'shares',
-                                                                       'Date Reported': 'date_reported',
-                                                                       '% Out': 'out_pct', 'Value': 'value'})
+institutional_holders_pd = stock.institutional_holders \
+    .rename(columns={'Holder': 'holder',
+                     'Shares': 'shares',
+                     'Date Reported': 'date_reported',
+                     '% Out': 'out_pct',
+                     'Value': 'value'})
 institutional_holders_pd[TICKER] = ticker
 
 

@@ -9,7 +9,6 @@ connection = locals()['connection']
 # CREATE TABLES IF NOT EXIST
 with connection.cursor() as cursor:
 
-
     # Create NASDAQ ticker table
     sql = """
             CREATE TABLE IF NOT EXISTS nasdaq(
