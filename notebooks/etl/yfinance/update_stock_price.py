@@ -15,7 +15,7 @@ from yitian.datasource import file_utils, preprocess, PRIVATE_HOST, USER, DATABA
 # | period        | '1d'             | data extraction period                   |
 # | table_name    | 'nasdaq_daily'   | the output table in DB                   |
 # | connection    | connection       | the output table in DB                   |
-
+connection = locals()['connection']
 ticker = locals()['ticker']
 period = locals()['period']
 table_name = locals()['table_name']
@@ -33,68 +33,6 @@ connection = pymysql.connect(host=PRIVATE_HOST,
 period = '2y' if period.isin(['5y', '10y', 'max']) else period
 
 # Read In Data
-
-data_pd = yf.download(  # or pdr.get_data_yahoo(...
-    # tickers list or string as well
-    tickers = ticker,
-
-    # use "period" instead of start/end
-    # valid periods: 1d,5d,1mo,3mo,6mo,1y,2y,5y,10y,ytd,max
-    # (optional, default is '1mo')
-    period = period,
-
-    # fetch data by interval (including intraday if period < 60 days)
-    # valid intervals: 1m,2m,5m,15m,30m,60m,90m,1h,1d,5d,1wk,1mo,3mo
-    # (optional, default is '1d')
-    interval = '60m',
-
-    # group by ticker (to access via data['SPY'])
-    # (optional, default is 'column')
-    group_by = 'ticker',
-
-    # adjust all OHLC automatically
-    # (optional, default is False)
-    auto_adjust = True,
-
-    # download pre/post regular market hours data
-    # (optional, default is False)
-    prepost = True,
-
-    # use threads for mass downloading? (True/False/Integer)
-    # (optional, default is True)
-    threads = True,
-
-    # proxy URL scheme use use when downloading?
-    # (optional, default is None)
-    proxy = None
-)
-
-
-# Standardize data_pd
-
-data_pd = data_pd.reset_index().rename(columns={'Datetime': DATETIME,
-                                                'Open': OPEN,
-                                                'High': HIGH,
-                                                'Low': LOW,
-                                                'Close': CLOSE,
-                                                'Volume': VOLUME})
-
-data_pd[DATETIME] = [t[:19] for t in data_pd[DATETIME].astype(str)]
-ts_pd = preprocess.create_ts_pd(data_pd, format=None, sort=True, index_col=DATETIME)
-ts_pd = preprocess.add_ymd(ts_pd, index_col=DATETIME)
-ts_pd[TICKER] = ticker
-ts_pd[UPDATED_AT] = dt.now().strftime("%Y-%m-%d %H:%M:%S")
-
-
-# Write historical price to data warehouse by year
-for year, grouped_pd in ts_pd.groupby(YEAR):
-    bucket_path = file_utils.create_data_path(EQUITY, 'company', ticker.lower(), str(year), 'hourly.csv')
-    grouped_pd.to_csv(bucket_path, header=True, index=True, mode='w', encoding='utf-8')
-    print(f"{ticker} in year {year} has been write to {bucket_path}")
-
-
-# Insert data into SQL table
-ts_pd.reset_index(inplace=True)
 
 with connection.cursor() as cursor:
     for index, row in ts_pd.iterrows():
