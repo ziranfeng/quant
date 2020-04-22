@@ -2,14 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="061e8099-0970-4414-a918-8b071017eaae" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/notebooks/etl/yfinance/batch_etl.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/etl/yfinance/batch_etl.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/yfinance/batch_etl.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/etl/yfinance/batch_etl.py" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/yfinance/batch_etl.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/notebooks/etl/yfinance/create_tables.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/yfinance/create_tables.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/etl/yfinance/stock_price_etl.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/etl/yfinance/update_additional_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/yfinance/update_additional_info.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yitian/datasource/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yitian/datasource/yfinance/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/yfinance/api.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

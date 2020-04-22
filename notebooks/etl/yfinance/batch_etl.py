@@ -42,14 +42,14 @@ try:
     ts_pd = preprocess.add_ymd(ts_pd, index_col=DATETIME)
     ts_pd[TICKER] = ticker
     ts_pd[UPDATED_AT] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    ts_pd = ts_pd[[TICKER, DATETIME, OPEN, HIGH, LOW, CLOSE, VOLUME, YEAR, MONTH, DAY, UPDATED_AT]]
 
     # filter out records larger and equal to 'stop_year'
     ts_pd = ts_pd[ts_pd.year < stop_year]
 
     # write batch data price to data storage
-    bucket_path = file_utils.create_data_path(EQUITY, ticker.lower(), subdir, 'daily.py')
-    ts_pd.to_csv(bucket_path, columns=[TICKER, DATETIME, OPEN, HIGH, LOW, CLOSE, VOLUME, YEAR, MONTH, DAY, UPDATED_AT],
-                 header=True, index=True, mode='w', encoding='utf-8')
+    bucket_path = file_utils.create_data_path(EQUITY, 'stocks', ticker.lower(), subdir, 'daily.py')
+    ts_pd.to_csv(bucket_path, header=True, index=True, mode='w', encoding='utf-8')
 
     logging.info(f"{ticker} - daily historical stock data has been write to {bucket_path}")
 
@@ -82,14 +82,14 @@ try:
     ts_pd = preprocess.add_ymd(ts_pd, index_col=DATETIME)
     ts_pd[TICKER] = ticker
     ts_pd[UPDATED_AT] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    ts_pd = ts_pd[[TICKER, DATETIME, OPEN, HIGH, LOW, CLOSE, VOLUME, YEAR, MONTH, DAY, UPDATED_AT]]
 
     # filter out records larger and equal to 'stop_year'
     ts_pd = ts_pd[ts_pd.year < stop_year]
 
     # write batch data price to data storage
-    bucket_path = file_utils.create_data_path(EQUITY, ticker.lower(), subdir, 'hourly.py')
-    ts_pd.to_csv(bucket_path, columns=[TICKER, DATETIME, OPEN, HIGH, LOW, CLOSE, VOLUME, YEAR, MONTH, DAY, UPDATED_AT],
-                 header=True, index=True, mode='w', encoding='utf-8')
+    bucket_path = file_utils.create_data_path(EQUITY, 'stocks', ticker.lower(), subdir, 'hourly.py')
+    ts_pd.to_csv(bucket_path, header=True, index=True, mode='w', encoding='utf-8')
 
     logging.info(f"{ticker} - hourly historical stock data has been write to {bucket_path}")
 
