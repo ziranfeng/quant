@@ -20,7 +20,7 @@ DATABASE='quant'
 STOCK_DAILY = 'stock_daily'
 STOCK_HOURLY = 'stock_hourly'
 STOCK_ACTIONS = 'stock_actions'
-STOCK_HOLDERS= 'stock_holders'
+MAJOR_HOLDERS= 'major_holders'
 INSTITUTIONAL_HOLDERS = 'institutional_holders'
 STOCK_RECOMMENDATIONS= 'stock_recommendations'
 

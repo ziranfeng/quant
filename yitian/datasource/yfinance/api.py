@@ -6,13 +6,13 @@ from yitian.datasource import *
 logging.basicConfig(filename=ETL_LOG, level=logging.INFO)
 
 
-def yfinance_data_api(tickers, period, interval,
+def yfinance_data_api(ticker, period, interval,
                       group_by='ticker', auto_adjust=True, prepost=True, threads=True, proxy=None):
 
     try:
         data_pd = yf.download(  # or pdr.get_data_yahoo(...
             # tickers list or string as well
-            tickers=tickers,
+            tickers=ticker,
 
             # use "period" instead of start/end
             # valid periods: 1d, 5d,1mo, 3mo, 6mo, 1y, 2y, 5y, 10y, ytd, max
@@ -45,7 +45,9 @@ def yfinance_data_api(tickers, period, interval,
             proxy=proxy
         )
 
-        return data_pd.reset_index(inplace=True)
+        data_pd.reset_index(inplace=True)
+
+        return data_pd
 
     except Exception as err:
         print(err)

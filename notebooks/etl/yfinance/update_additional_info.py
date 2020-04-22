@@ -38,12 +38,11 @@ print("{output_file_name} has been write to bucket".format(output_file_name=outp
 
 # stock_actions
 action_pd = stock.actions.reset_index().rename(columns={'Date': DATE, 'Dividends': DIVIDENDS, 'Stock Splits': SPLITS})
-action_pd = preprocess.create_ts_pd(action_pd, format=None, sort=True, index_col=DATE)
 
 
 # stock_holders
-stock_holder_pd = pd.DataFrame([[num.split('%')[0] for num in stock.major_holders[0].tolist()]],
-                               columns=['insider', 'inst_s_pct', 'inst_f_pct', 'inst_n'])
+columns=['insider', 'inst_s_pct', 'inst_f_pct', 'n_inst']
+stock_holder_pd = pd.DataFrame([[num.split('%')[0] for num in stock.major_holders[0].tolist()]], columns=columns)
 stock_holder_pd[UPDATED_AT] = dt.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
@@ -63,8 +62,8 @@ with connection.cursor() as cursor:
     for index, row in action_pd.iterrows():
         sql = """
         INSERT IGNORE INTO {table_name}(ticker, date, dividends, splits) 
-        VALUES('{ticker_v}', '{date_v}', {dividends_v}, {splits_v})
-        """.format(table_name=STOCK_ACTIONS, ticker_v=ticker, date_v=row[DATE], dividends_v=row[OPEN], splits_v=row[HIGH])
+        VALUES('{ticker_v}', '{date_v}', '{dividends_v}', '{splits_v}')
+        """.format(table_name=STOCK_ACTIONS, ticker_v=ticker, date_v=row[DATE], dividends_v=row[DIVIDENDS], splits_v=row[SPLITS])
 
         print(sql)
         cursor.execute(sql)
@@ -72,10 +71,10 @@ with connection.cursor() as cursor:
 
     for index, row in stock_holder_pd.iterrows():
         sql = """
-        INSERT IGNORE INTO {table_name}(ticker, date_updated, insider_share_pct, institution_share_pct, institution_float_pct, institution_number) 
-        VALUES('{ticker_v}', '{date_updated_v}', {insider_v}, {inst_s_pct_v}, {inst_f_pct_v}, {inst_n_v})
-        """.format(table_name=STOCK_HOLDERS, ticker_v=ticker, date_updated_v=row[DATE], insider_v=row['insider'],
-                   inst_s_pct_v=row['inst_s_pct'], inst_f_pct_v=row['inst_f_pct'], inst_n_v=row['inst_n'])
+        INSERT IGNORE INTO {table_name}(ticker, date_updated, insider_share_pct, institution_share_pct, institution_float_pct, number_institution) 
+        VALUES('{ticker}', '{updated_at}', '{insider}', '{inst_s_pct}', '{inst_f_pct}', '{n_inst}')
+        """.format(table_name=MAJOR_HOLDERS, ticker=ticker, updated_at=row[UPDATED_AT],
+                   insider=row['insider'], inst_s_pct=row['inst_s_pct'], inst_f_pct=row['inst_f_pct'], n_inst=row['n_inst'])
 
         print(sql)
         cursor.execute(sql)
@@ -84,9 +83,9 @@ with connection.cursor() as cursor:
     for index, row in institutional_holders_pd.iterrows():
         sql = """
         INSERT IGNORE INTO {table_name}(ticker, holder, shares, date_reported, out_pct, value) 
-        VALUES('{ticker_v}', '{holder_v}', {shares_v}, {date_reported_v}, {out_pct_v}, {value_v})
-        """.format(table_name=INSTITUTIONAL_HOLDERS, ticker_v=ticker, holder_v=row['holder'], shares_v=row['shares'],
-                   date_reported_v=row['date_reported'], out_pct_v=row['out_pct'], value_v=row['value'])
+        VALUES('{ticker}', '{holder}', '{shares}', '{date_reported}', '{out_pct}', '{value}')
+        """.format(table_name=INSTITUTIONAL_HOLDERS, ticker=ticker, holder=row['holder'], shares=row['shares'],
+                   date_reported=row['date_reported'], out_pct=row['out_pct'], value=row['value'])
 
         print(sql)
         cursor.execute(sql)
