@@ -42,7 +42,6 @@ try:
     ts_pd = preprocess.add_ymd(ts_pd, index_col=DATETIME)
     ts_pd[TICKER] = ticker
     ts_pd[UPDATED_AT] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    ts_pd = ts_pd[[TICKER, DATETIME, OPEN, HIGH, LOW, CLOSE, VOLUME, YEAR, MONTH, DAY, UPDATED_AT]]
 
     # filter out records larger and equal to 'stop_year'
     ts_pd = ts_pd[ts_pd.year < stop_year]
@@ -82,7 +81,6 @@ try:
     ts_pd = preprocess.add_ymd(ts_pd, index_col=DATETIME)
     ts_pd[TICKER] = ticker
     ts_pd[UPDATED_AT] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    ts_pd = ts_pd[[TICKER, DATETIME, OPEN, HIGH, LOW, CLOSE, VOLUME, YEAR, MONTH, DAY, UPDATED_AT]]
 
     # filter out records larger and equal to 'stop_year'
     ts_pd = ts_pd[ts_pd.year < stop_year]
