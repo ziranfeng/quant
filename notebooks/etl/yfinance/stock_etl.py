@@ -1,4 +1,4 @@
-# This script extract, transform and load stock price for given period & interval using yfinance
+# Extracts, Transform and Load data using 'yfinance' API in batches for historical data and updated data
 
 import logging
 from datetime import datetime
@@ -14,14 +14,16 @@ logging.basicConfig(filename=ETL_LOG, level=logging.INFO)
 # | parameter       | example          |  description                                                              |
 # |-----------------|------------------|---------------------------------------------------------------------------|
 # | ticker          | 'MSFT'           | the target year for data extraction                                       |
+# | current_year    | 2020             | in non-'update' mode, data of year before 'current_year' will be removed  |
 # | mode            | 'update'         | data extraction period                                                    |
-# | stop_year       | 2020             | during non-'update' mode, data of year before 'stop_year' will be removed |
 ticker = locals()['ticker']
-stop_year = locals()['stop_year']
+current_year = locals()['current_year']
 mode = locals()['mode']
 
+
+# Set 'daily_period', 'hourly_period' and 'subdir' dates for different mode
 if mode == 'update':
-    daily_period, hourly_period, subdir = 'ytd', 'ytd', stop_year
+    daily_period, hourly_period, subdir = 'ytd', 'ytd', str(current_year)
 else:
     daily_period, hourly_period, subdir = 'max', '2y', 'history'
 
@@ -41,11 +43,11 @@ try:
     ts_pd = preprocess.create_ts_pd(data_pd, format=None, sort=True, index_col=DATETIME)
     ts_pd = preprocess.add_ymd(ts_pd, index_col=DATETIME)
     ts_pd[TICKER] = ticker
-    ts_pd[UPDATED_AT] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    ts_pd[UPDATED_AT] = datetime.now().strftime("%Y-%m-%d")
 
     # filter out records larger and equal to 'stop_year' if not in `update` mode
     if mode != 'update':
-        ts_pd = ts_pd[ts_pd.year < stop_year]
+        ts_pd = ts_pd[ts_pd.year < current_year]
 
     # write batch data price to data storage
     bucket_path = file_utils.create_data_path(EQUITY, 'stocks', ticker.lower(), subdir, 'daily.py')
@@ -59,7 +61,6 @@ try:
 
 
 except Exception as err:
-    print(err)
     logging.error(err, exc_info=True)
 
 
@@ -82,11 +83,11 @@ try:
     ts_pd = preprocess.create_ts_pd(data_pd, format=None, sort=True, index_col=DATETIME)
     ts_pd = preprocess.add_ymd(ts_pd, index_col=DATETIME)
     ts_pd[TICKER] = ticker
-    ts_pd[UPDATED_AT] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    ts_pd[UPDATED_AT] = datetime.now().strftime("%Y-%m-%d")
 
     # filter out records larger and equal to 'stop_year' if not in `update` mode
     if mode != 'update':
-        ts_pd = ts_pd[ts_pd.year < stop_year]
+        ts_pd = ts_pd[ts_pd.year < current_year]
 
     # write batch data price to data storage
     bucket_path = file_utils.create_data_path(EQUITY, 'stocks', ticker.lower(), subdir, 'hourly.py')
@@ -100,5 +101,4 @@ try:
 
 
 except Exception as err:
-    print(err)
     logging.error(err, exc_info=True)

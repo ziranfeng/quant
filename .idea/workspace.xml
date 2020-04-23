@@ -2,18 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="061e8099-0970-4414-a918-8b071017eaae" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/notebooks/etl/yfinance/batch_add_info_etl.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notebooks/etl/quandl/create_tables.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notebooks/etl/quandl/default_etl.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/etl/quandl/fed.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/quandl/fed.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/etl/quandl/nasdaq.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/quandl/nasdaq.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/etl/quandl/opec.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/quandl/opec.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/etl/quandl/update.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/quandl/update.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/etl/yfinance/batch_etl.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/yfinance/batch_stock_etl.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/etl/yfinance/batch_etl.py" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/yfinance/stock_etl.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/etl/quandl/extraction.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/etl/quandl/fed.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/etl/quandl/nasdaq.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/etl/quandl/opec.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/etl/yfinance/add_info_etl.py" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/yfinance/add_info_etl.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/etl/yfinance/batch_stock_etl.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/yfinance/batch_stock_etl.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/notebooks/etl/yfinance/create_tables.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/yfinance/create_tables.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/etl/yfinance/update_additional_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/yfinance/add_info_etl.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/etl/yfinance/update_etl.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/etl/yfinance/update_stock_price.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/etl/yfinance/stock_etl.py" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/yfinance/stock_etl.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements/quant.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements/quant.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yitian/datasource/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yitian/datasource/cloud_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/cloud_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yitian/datasource/quandl/fed/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/quandl/fed/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yitian/datasource/quandl/nasdaq/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/quandl/nasdaq/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yitian/datasource/quandl/opec/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/quandl/opec/__init__.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,11 +49,17 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/notebooks/etl/quandl" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/notebooks/etl/quandl" />
+      <recent name="$PROJECT_DIR$/notebooks/etl/quandlnce" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/notebooks/logs" />
       <recent name="$PROJECT_DIR$/notebooks/etl/yfinance" />
       <recent name="$PROJECT_DIR$/yitian/datasource/tests" />
       <recent name="$PROJECT_DIR$/notebooks/ETL/quandl" />
@@ -239,10 +251,10 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="283" y="204" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.23.1440.877/-1005.-1417.3440.1417@0.23.1440.877" timestamp="1583383375892" />
-    <state x="2499" y="-406" width="670" height="676" key="search.everywhere.popup" timestamp="1587666395111">
+    <state x="2499" y="-406" width="670" height="676" key="search.everywhere.popup" timestamp="1587676252993">
       <screen x="1440" y="-716" width="3440" height="1417" />
     </state>
     <state x="54" y="-1107" width="670" height="676" key="search.everywhere.popup/0.23.1440.877/-1005.-1417.3440.1417@-1005.-1417.3440.1417" timestamp="1584238345687" />
-    <state x="2499" y="-406" width="670" height="676" key="search.everywhere.popup/0.23.1440.877/1440.-716.3440.1417@1440.-716.3440.1417" timestamp="1587666395111" />
+    <state x="2499" y="-406" width="670" height="676" key="search.everywhere.popup/0.23.1440.877/1440.-716.3440.1417@1440.-716.3440.1417" timestamp="1587676252993" />
   </component>
 </project>

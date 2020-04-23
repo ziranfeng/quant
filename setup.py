@@ -13,7 +13,7 @@ tests_require = [
 
 setup(
     name='yitian',
-    version='0.0.1',
+    version='0.0.2',
     description='World Financial and Economic Data Analysis',
     author='Ziran Feng',
     author_email='ziran.feng01@gmail.com',
@@ -47,7 +47,7 @@ setup(
         'tsfresh>=0.10.0',
         'pandas_datareader>=0.8.0',
         'yfinance>=0.1.50',
-        'pymysql>=0.7'
+        'pymysql>=0.9'
     ],
     tests_require=tests_require,
     extras_require={

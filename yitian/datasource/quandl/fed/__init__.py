@@ -1,9 +1,14 @@
-NAME = 'us_fed'
+from yitian.datasource import *
 
 FED_DATABASE_CODE = "FED"
 
 DATASET_CODE_MAP = {
-    'svenpy': 'us_treasury_par_yield_curve',
-    'sveny': 'us_treasury_zero_coupon_yield_curve',
-    'tipsy': 'tips_yield_curve_and_inflation_compensation',
+    # 'us_treasury_par_yield_curve'
+    'svenpy': FED_SVENPY,
+
+    # 'us_treasury_zero_coupon_yield_curve'
+    'sveny': FED_SVENY,
+
+    # 'tips_yield_curve_and_inflation_compensation'
+    'tipsy': FED_TIPSY,
 }
