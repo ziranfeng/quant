@@ -11,14 +11,14 @@ logging.basicConfig(filename=ETL_LOG, level=logging.INFO)
 
 
 # required parameters
-# | parameter       | example          |  description                             |
-# |-----------------|------------------|------------------------------------------|
-# | ticker          | ['MSFT']         | the target year for data extraction      |
-# | period_interval | ('max', '1d')    | data extraction period                   |
+# | parameter       | example          |  description                                                              |
+# |-----------------|------------------|---------------------------------------------------------------------------|
+# | ticker          | 'MSFT'           | the target year for data extraction                                       |
+# | mode            | 'update'         | data extraction period                                                    |
+# | stop_year       | 2020             | during non-'update' mode, data of year before 'stop_year' will be removed |
 ticker = locals()['ticker']
-mode = locals()['mode']
 stop_year = locals()['stop_year']
-
+mode = locals()['mode']
 
 if mode == 'update':
     daily_period, hourly_period, subdir = 'ytd', 'ytd', stop_year
@@ -43,8 +43,9 @@ try:
     ts_pd[TICKER] = ticker
     ts_pd[UPDATED_AT] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    # filter out records larger and equal to 'stop_year'
-    ts_pd = ts_pd[ts_pd.year < stop_year]
+    # filter out records larger and equal to 'stop_year' if not in `update` mode
+    if mode != 'update':
+        ts_pd = ts_pd[ts_pd.year < stop_year]
 
     # write batch data price to data storage
     bucket_path = file_utils.create_data_path(EQUITY, 'stocks', ticker.lower(), subdir, 'daily.py')
@@ -55,6 +56,7 @@ try:
     # insert batch data price to mysql table
     cloud_utils.csv_to_sql(mysql_instance=INSTANCE, file_path=bucket_path, table=STOCK_DAILY, database=DATABASE)
     logging.info(f"{ticker} - daily historical stock data processing time: {datetime.now() - start}")
+
 
 except Exception as err:
     print(err)
@@ -82,8 +84,9 @@ try:
     ts_pd[TICKER] = ticker
     ts_pd[UPDATED_AT] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    # filter out records larger and equal to 'stop_year'
-    ts_pd = ts_pd[ts_pd.year < stop_year]
+    # filter out records larger and equal to 'stop_year' if not in `update` mode
+    if mode != 'update':
+        ts_pd = ts_pd[ts_pd.year < stop_year]
 
     # write batch data price to data storage
     bucket_path = file_utils.create_data_path(EQUITY, 'stocks', ticker.lower(), subdir, 'hourly.py')
@@ -94,6 +97,7 @@ try:
     # insert batch data price to mysql table
     cloud_utils.csv_to_sql(mysql_instance=INSTANCE, file_path=bucket_path, table=STOCK_HOURLY, database=DATABASE)
     logging.info(f"{ticker} - hourly historical stock data processing time: {datetime.now() - start}")
+
 
 except Exception as err:
     print(err)
