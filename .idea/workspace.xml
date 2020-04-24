@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="061e8099-0970-4414-a918-8b071017eaae" name="Default Changelist" comment="" />
+    <list default="true" id="061e8099-0970-4414-a918-8b071017eaae" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/etl/quandl/batch_etl.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/quandl/batch_etl.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/etl/yfinance/batch_add_info_etl.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/yfinance/batch_add_info_etl.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/etl/yfinance/batch_stock_etl.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/yfinance/batch_stock_etl.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/etl/yfinance/stock_etl.py" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/etl/yfinance/stock_etl.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yitian/datasource/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yitian/datasource/quandl/fed/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/yitian/datasource/quandl/fed/__init__.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

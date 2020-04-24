@@ -25,7 +25,7 @@ mode = locals()['mode']
 if mode == 'update':
     daily_period, hourly_period, subdir = 'ytd', 'ytd', str(current_year)
 else:
-    daily_period, hourly_period, subdir = 'max', '2y', 'history'
+    daily_period, hourly_period, subdir = '100y', '2y', 'history'
 
 # ====================================================================================================================
 # Batch processing daily historical stock data
@@ -50,13 +50,13 @@ try:
         ts_pd = ts_pd[ts_pd.year < current_year]
 
     # write batch data price to data storage
-    bucket_path = file_utils.create_data_path(EQUITY, 'stocks', ticker.lower(), subdir, 'daily.py')
+    bucket_path = file_utils.create_data_path(EQUITY, 'stocks', ticker.lower(), subdir, 'daily.csv')
     ts_pd.to_csv(bucket_path, header=True, index=True, mode='w', encoding='utf-8')
 
     logging.info(f"{ticker} - daily historical stock data has been write to {bucket_path}")
 
     # insert batch data price to mysql table
-    cloud_utils.csv_to_sql(mysql_instance=INSTANCE, file_path=bucket_path, table=STOCK_DAILY, database=DATABASE)
+    cloud_utils.csv_to_sql(mysql_instance=INSTANCE, file_path=bucket_path, table=STOCK_DAILY, database=EQUITY)
     logging.info(f"{ticker} - daily historical stock data processing time: {datetime.now() - start}")
 
 
@@ -90,13 +90,13 @@ try:
         ts_pd = ts_pd[ts_pd.year < current_year]
 
     # write batch data price to data storage
-    bucket_path = file_utils.create_data_path(EQUITY, 'stocks', ticker.lower(), subdir, 'hourly.py')
+    bucket_path = file_utils.create_data_path(EQUITY, 'stocks', ticker.lower(), subdir, 'hourly.csv')
     ts_pd.to_csv(bucket_path, header=True, index=True, mode='w', encoding='utf-8')
 
     logging.info(f"{ticker} - hourly historical stock data has been write to {bucket_path}")
 
     # insert batch data price to mysql table
-    cloud_utils.csv_to_sql(mysql_instance=INSTANCE, file_path=bucket_path, table=STOCK_HOURLY, database=DATABASE)
+    cloud_utils.csv_to_sql(mysql_instance=INSTANCE, file_path=bucket_path, table=STOCK_HOURLY, database=EQUITY)
     logging.info(f"{ticker} - hourly historical stock data processing time: {datetime.now() - start}")
 
 

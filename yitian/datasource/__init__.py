@@ -1,5 +1,5 @@
 # logs
-ETL_LOG = 'logs/etl.log'
+ETL_LOG = 'notebooks/logs/etl.log'
 
 
 # cloud storage
