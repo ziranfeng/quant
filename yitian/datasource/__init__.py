@@ -10,7 +10,7 @@ LOCAL_CACHE = '/home/jupyter/local_cache'
 # cloud SQL
 INSTANCE = 'dev-xiangyang'
 PRIVATE_HOST= '10.101.224.3'
-USER='root'
+USER='ziran'
 DATABASE='quant'
 
 
